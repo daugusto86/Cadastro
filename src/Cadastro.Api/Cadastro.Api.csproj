@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cadastro.Application\Cadastro.Application.csproj" />
     <ProjectReference Include="..\Cadastro.Infra\Cadastro.Infra.csproj" />
   </ItemGroup>
 

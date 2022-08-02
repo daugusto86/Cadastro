@@ -1,50 +1,68 @@
-﻿using Cadastro.Application.Interfaces;
+﻿using AutoMapper;
+using Cadastro.Application.Interfaces;
 using Cadastro.Application.ViewModels;
 using Cadastro.Domain.Interfaces;
+using Cadastro.Domain.Models;
 
 namespace Cadastro.Application.Services
 {
     public class ClienteService : IClienteService
     {
         private readonly IClienteRepository clienteRepository;
-        public ClienteService(IClienteRepository clienteRepository)
+        private readonly IMapper mapper;
+        
+        public ClienteService(IClienteRepository clienteRepository, IMapper mapper)
         {
             this.clienteRepository = clienteRepository;
+            this.mapper = mapper;
         }
 
         public async Task<IEnumerable<ClienteViewModel>> ObterTodos()
         {
-            throw new NotImplementedException();
+            var clientes = await clienteRepository.ObterTodos();
+            return mapper.Map<IEnumerable<ClienteViewModel>>(clientes);
         }
         
-        public Task<ClienteViewModel> ObterPorId(Guid id)
+        public async Task<ClienteViewModel> ObterPorId(Guid id)
         {
-            throw new NotImplementedException();
+            var cliente = await clienteRepository.ObterPorId(id);
+            return mapper.Map<ClienteViewModel>(cliente);
         }
         
-        public Task<ClienteViewModel> ObterPorEmail(string email)
+        public async Task<ClienteViewModel> ObterPorEmail(string email)
         {
-            throw new NotImplementedException();
+            var cliente = (await clienteRepository.Buscar(x => x.Email == email))
+                .FirstOrDefault();
+
+            return mapper.Map<ClienteViewModel>(cliente);
         }
 
-        public Task<IEnumerable<ClienteViewModel>> ObterPorNome(string nome)
+        public async Task<IEnumerable<ClienteViewModel>> ObterPorNome(string nome)
         {
-            throw new NotImplementedException();
+            var clientes = await clienteRepository.Buscar(x => x.Nome == nome);
+            return mapper.Map<IEnumerable<ClienteViewModel>>(clientes);
         }
 
-        public Task<bool> Adicionar(ClienteViewModel cliente)
+        public async Task<bool> Adicionar(ClienteViewModel cliente)
         {
-            throw new NotImplementedException();
+            var model = mapper.Map<Cliente>(cliente);
+            clienteRepository.Adicionar(model);
+
+            return await clienteRepository.UnitOfWork.Commit();
         }
 
-        public Task<bool> Atualizar(ClienteViewModel cliente)
+        public async Task<bool> Atualizar(ClienteViewModel cliente)
         {
-            throw new NotImplementedException();
+            var model = mapper.Map<Cliente>(cliente);
+            clienteRepository.Atualizar(model);
+
+            return await clienteRepository.UnitOfWork.Commit();
         }
 
-        public Task<bool> Remover(Guid id)
+        public async Task<bool> Remover(Guid id)
         {
-            throw new NotImplementedException();
+            clienteRepository.Remover(id);
+            return await clienteRepository.UnitOfWork.Commit();
         }
     }
 }
