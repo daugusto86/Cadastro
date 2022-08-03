@@ -10,7 +10,8 @@ namespace Cadastro.Api.Controllers
     {
         private readonly IClienteService clienteService;
 
-        public ClientesController(IClienteService clienteService)
+        public ClientesController(IClienteService clienteService, 
+            INotificador notificador) : base(notificador)
         {
             this.clienteService = clienteService;
         }
@@ -47,6 +48,42 @@ namespace Cadastro.Api.Controllers
             return cliente;
         }
 
+        [HttpPost]
+        public async Task<ActionResult<ClienteViewModel>> Adicionar(ClienteViewModel cliente)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
+            await clienteService.Adicionar(cliente);
+
+            return CustomResponse(cliente);
+        }
+
+        [HttpPut("{id:guid}")]
+        public async Task<ActionResult<ClienteViewModel>> Atualizar(Guid id, ClienteViewModel cliente)
+        {
+            if (id != cliente.Id)
+            {
+                NotificarErro("Id informado na query diferente do Id informado no post");
+                return CustomResponse(cliente);
+            }
+
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            await clienteService.Atualizar(cliente);
+
+            return CustomResponse(cliente);
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult<ClienteViewModel>> Excluir(Guid id)
+        {
+            var cliente = await clienteService.ObterPorId(id);
+
+            if (cliente == null) return NotFound();
+
+            await clienteService.Remover(id);
+
+            return CustomResponse(cliente);
+        }
     }
 }

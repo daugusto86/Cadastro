@@ -1,3 +1,4 @@
+using Cadastro.Api.Configuration;
 using Cadastro.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,16 +17,25 @@ builder.Services.AddDbContext<CadastroContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CadastroConStr"));
 });
 
-builder.Services.AddControllers();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+//builder.Services.AddControllers();
+builder.Services.AddApiConfig();
+
+builder.Services.AddSwaggerConfig();
+
+builder.Services.ResolveDependencies();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
-app.UseHttpsRedirection();
 
-app.UseAuthorization();
+//app.UseHttpsRedirection();
+//app.UseAuthorization();
+//app.MapControllers();
+app.UseApiConfig(app.Environment);
 
-app.MapControllers();
+app.UseSwaggerConfig();
 
 app.Run();
