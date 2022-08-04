@@ -10,7 +10,7 @@ namespace Cadastro.Application.Services
     {
         private readonly IClienteRepository clienteRepository;
         private readonly IMapper mapper;
-        
+
         public ClienteService(IClienteRepository clienteRepository, IMapper mapper)
         {
             this.clienteRepository = clienteRepository;

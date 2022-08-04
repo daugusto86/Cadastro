@@ -1,6 +1,5 @@
 ﻿using Cadastro.Application.Interfaces;
 using Cadastro.Application.ViewModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cadastro.Api.Controllers
@@ -22,13 +21,13 @@ namespace Cadastro.Api.Controllers
             return await clienteService.ObterTodos();
         }
 
-        [HttpGet("{nome}")]
+        [HttpGet("nome/{nome}")]
         public async Task<IEnumerable<ClienteViewModel>> ObterPorNome(string nome)
         {
             return await clienteService.ObterPorNome(nome);
         }
 
-        [HttpGet("{email}")]
+        [HttpGet("email/{email}")]
         public async Task<ActionResult<ClienteViewModel>> ObterPorEmail(string email)
         {
             var cliente = await clienteService.ObterPorEmail(email);

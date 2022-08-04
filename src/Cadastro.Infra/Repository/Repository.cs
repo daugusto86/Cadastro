@@ -17,34 +17,34 @@ namespace Cadastro.Infra.Repository
             DbSet = context.Set<TEntity>();
         }
 
-        public Task<List<TEntity>> ObterTodos()
+        public async Task<List<TEntity>> ObterTodos()
         {
-            throw new NotImplementedException();
+            return await DbSet.AsNoTracking().ToListAsync();
         }
 
-        public Task<TEntity> ObterPorId(Guid id)
+        public async Task<TEntity> ObterPorId(Guid id)
         {
-            throw new NotImplementedException();
+            return await DbSet.FindAsync(id);
         }
 
-        public Task<IEnumerable<TEntity>> Buscar(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> Buscar(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return await DbSet.AsNoTracking().Where(predicate).ToListAsync();
         }
 
         public void Adicionar(TEntity entity)
         {
-            throw new NotImplementedException();
+            DbSet.Add(entity);
         }
 
         public void Atualizar(TEntity entity)
         {
-            throw new NotImplementedException();
+            DbSet.Update(entity);
         }
 
         public void Remover(Guid id)
         {
-            throw new NotImplementedException();
+            DbSet.Remove(new TEntity { Id = id });
         }
 
         public void Dispose() => context?.Dispose();
