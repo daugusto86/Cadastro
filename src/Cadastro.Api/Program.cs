@@ -18,6 +18,7 @@ builder.Services.AddDbContext<CadastroContext>(options =>
 });
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+//builder.Services.AddAutoMapperConfig();
 
 //builder.Services.AddControllers();
 builder.Services.AddApiConfig();
