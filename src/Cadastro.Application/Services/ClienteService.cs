@@ -3,15 +3,18 @@ using Cadastro.Application.Interfaces;
 using Cadastro.Application.ViewModels;
 using Cadastro.Domain.Interfaces;
 using Cadastro.Domain.Models;
+using Cadastro.Domain.Models.Validations;
 
 namespace Cadastro.Application.Services
 {
-    public class ClienteService : IClienteService
+    public class ClienteService : BaseService, IClienteService
     {
         private readonly IClienteRepository clienteRepository;
         private readonly IMapper mapper;
 
-        public ClienteService(IClienteRepository clienteRepository, IMapper mapper)
+        public ClienteService(IClienteRepository clienteRepository, 
+            IMapper mapper,
+            INotificador notificador) : base(notificador)
         {
             this.clienteRepository = clienteRepository;
             this.mapper = mapper;
@@ -46,6 +49,9 @@ namespace Cadastro.Application.Services
         public async Task<bool> Adicionar(ClienteViewModel cliente)
         {
             var model = mapper.Map<Cliente>(cliente);
+            if (!ExecutarValidacao(new ClienteValidation(), model))
+                return false;
+
             clienteRepository.Adicionar(model);
 
             return await clienteRepository.UnitOfWork.Commit();
@@ -54,6 +60,9 @@ namespace Cadastro.Application.Services
         public async Task<bool> Atualizar(ClienteViewModel cliente)
         {
             var model = mapper.Map<Cliente>(cliente);
+            if (!ExecutarValidacao(new ClienteValidation(), model))
+                return false;
+            
             clienteRepository.Atualizar(model);
 
             return await clienteRepository.UnitOfWork.Commit();

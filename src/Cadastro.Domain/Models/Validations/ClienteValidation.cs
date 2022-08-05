@@ -12,7 +12,7 @@ namespace Cadastro.Domain.Models.Validations
 
             RuleFor(x => x.Cpf)
                 .NotEmpty().WithMessage("O campo {PropertyName} é obrigatório.")
-                .Length(11).WithMessage("O campo {PropertyName} precisa ter {Length} caracteres.");
+                .Length(11).WithMessage("O campo {PropertyName} precisa ter {MaxLength} caracteres.");
 
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("O campo {PropertyName} é obrigatório.");

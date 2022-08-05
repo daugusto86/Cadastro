@@ -35,11 +35,10 @@ namespace Cadastro.Api.Configuration
             }
             else
             {
+                app.UseMiddleware<ExceptionMiddleware>();
                 app.UseHsts();
             }
 
-            app.UseMiddleware<ExceptionMiddleware>();
-            
             app.UseHttpsRedirection();
             
             app.UseRouting();
