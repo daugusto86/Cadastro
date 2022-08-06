@@ -1,6 +1,5 @@
 ﻿using Cadastro.Application.Interfaces;
 using Cadastro.Application.Notificacoes;
-using Cadastro.Application.Services;
 using Cadastro.Domain.Interfaces;
 using Cadastro.Infra.Context;
 using Cadastro.Infra.Repository;
@@ -18,10 +17,13 @@ namespace Cadastro.Api.Configuration
             services.AddScoped<IClienteRepository, ClienteRepository>();
 
             // services
-            services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<Application.Interfaces.IClienteService, Application.Services.ClienteService>();
 
             // notificador
             services.AddScoped<INotificador, Notificador>();
+
+            // domain services
+            services.AddScoped<Domain.Interfaces.IClienteService, Domain.Services.ClienteService>();
 
             // TODO
             // add HttpContextAccessor
