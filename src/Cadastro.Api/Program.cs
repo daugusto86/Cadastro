@@ -15,6 +15,8 @@ builder.Services.AddDbContext<CadastroContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CadastroConStr"));
 });
 
+builder.Services.AddIdentityConfig(builder.Configuration);
+
 builder.Services.AddAutoMapperConfig();
 
 builder.Services.AddApiConfig();
