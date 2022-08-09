@@ -56,6 +56,7 @@ namespace Cadastro.Api.Controllers
             return CustomResponse(registerUser);
         }
 
+        [HttpPost("entrar")]
         public async Task<ActionResult> Login(LoginUserViewModel loginUser)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
