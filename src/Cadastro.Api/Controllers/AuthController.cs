@@ -1,9 +1,9 @@
 ﻿using Cadastro.Api.Extensions;
 using Cadastro.Api.ViewModels;
 using Cadastro.Application.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -21,11 +21,11 @@ namespace Cadastro.Api.Controllers
         public AuthController(INotificador notificador,
             SignInManager<IdentityUser> signInManager,
             UserManager<IdentityUser> userManager,
-            AppSettings appSettings) : base(notificador)
+            IOptions<AppSettings> appSettings) : base(notificador)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
-            this.appSettings = appSettings;
+            this.appSettings = appSettings.Value;
         }
 
         [HttpPost("registrar")]

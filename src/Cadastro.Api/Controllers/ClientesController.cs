@@ -1,5 +1,6 @@
 ﻿using Cadastro.Application.Interfaces;
 using Cadastro.Application.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cadastro.Api.Controllers
@@ -47,6 +48,7 @@ namespace Cadastro.Api.Controllers
             return cliente;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<ClienteViewModel>> Adicionar(ClienteViewModel cliente)
         {
@@ -57,6 +59,7 @@ namespace Cadastro.Api.Controllers
             return CustomResponse(cliente);
         }
 
+        [Authorize]
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<ClienteViewModel>> Atualizar(Guid id, ClienteViewModel cliente)
         {
@@ -73,6 +76,7 @@ namespace Cadastro.Api.Controllers
             return CustomResponse(cliente);
         }
 
+        [Authorize]
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<ClienteViewModel>> Excluir(Guid id)
         {

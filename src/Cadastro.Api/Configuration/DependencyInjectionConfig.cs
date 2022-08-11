@@ -1,4 +1,5 @@
-﻿using Cadastro.Application.Interfaces;
+﻿using Cadastro.Api.Extensions;
+using Cadastro.Application.Interfaces;
 using Cadastro.Application.Notificacoes;
 using Cadastro.Domain.Interfaces;
 using Cadastro.Infra.Context;
@@ -25,9 +26,10 @@ namespace Cadastro.Api.Configuration
             // domain services
             services.AddScoped<Domain.Interfaces.IClienteService, Domain.Services.ClienteService>();
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IAspNetUser, AspNetUser>();
+            
             // TODO
-            // add HttpContextAccessor
-            // add User
             // add SwaggerOptions
 
             return services;
