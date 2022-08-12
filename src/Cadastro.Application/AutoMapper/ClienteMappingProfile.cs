@@ -13,7 +13,8 @@ namespace Cadastro.Application.AutoMapper
     {
         public ClienteMappingProfile()
         {
-            CreateMap<Cliente, ClienteViewModel>().ReverseMap();
+            CreateMap<Cliente, ClienteViewModel>().ReverseMap()
+                .ConstructUsing(x => new Cliente(x.Nome, x.Cpf, x.Email, x.DataCadastro));
         }
     }
 }
