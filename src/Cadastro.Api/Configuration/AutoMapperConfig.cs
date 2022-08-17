@@ -1,4 +1,4 @@
-﻿using Cadastro.Application.AutoMapper;
+﻿using Cadastro.Cliente.Application.AutoMapper;
 using System.Reflection;
 
 namespace Cadastro.Api.Configuration

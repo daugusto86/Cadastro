@@ -1,12 +1,11 @@
-﻿using Cadastro.Domain.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Cadastro.Infra.Mappings
+namespace Cadastro.Cliente.Infra.Data.Mappings
 {
-    public class ClienteMapping : IEntityTypeConfiguration<Cliente>
+    public class ClienteMapping : IEntityTypeConfiguration<Domain.Models.Cliente>
     {
-        public void Configure(EntityTypeBuilder<Cliente> builder)
+        public void Configure(EntityTypeBuilder<Domain.Models.Cliente> builder)
         {
             builder.HasKey(x => x.Id);
 

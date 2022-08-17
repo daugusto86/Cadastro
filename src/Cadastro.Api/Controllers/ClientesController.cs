@@ -1,6 +1,7 @@
 ﻿using Cadastro.Api.Extensions;
-using Cadastro.Application.Interfaces;
-using Cadastro.Application.ViewModels;
+using Cadastro.Cliente.Application.Interfaces;
+using Cadastro.Cliente.Application.ViewModels;
+using Cadastro.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

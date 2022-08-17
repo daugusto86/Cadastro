@@ -1,4 +1,4 @@
-﻿namespace Cadastro.Application.ViewModels
+﻿namespace Cadastro.Cliente.Application.ViewModels
 {
     public class ClienteViewModel
     {

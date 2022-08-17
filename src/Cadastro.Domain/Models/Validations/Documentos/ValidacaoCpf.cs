@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cadastro.Domain.Models.Validations.Documentos
+namespace Cadastro.Cliente.Domain.Models.Validations.Documentos
 {
     public class ValidacaoCpf
     {
@@ -107,7 +107,7 @@ namespace Cadastro.Domain.Models.Validations.Documentos
                 if (++m >= _multiplicadores.Count) m = 0;
             }
 
-            var mod = (soma % Modulo);
+            var mod = soma % Modulo;
             var resultado = _complementarDoModulo ? Modulo - mod : mod;
 
             return _substituicoes.ContainsKey(resultado) ? _substituicoes[resultado] : resultado.ToString();

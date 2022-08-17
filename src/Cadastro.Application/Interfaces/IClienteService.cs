@@ -1,6 +1,6 @@
-﻿using Cadastro.Application.ViewModels;
+﻿using Cadastro.Cliente.Application.ViewModels;
 
-namespace Cadastro.Application.Interfaces
+namespace Cadastro.Cliente.Application.Interfaces
 {
     public interface IClienteService
     {

@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadastro.Api", "src\Cadastro.Api\Cadastro.Api.csproj", "{52799CAC-5A10-4F0C-A695-4721FDB3ABDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadastro.Api", "src\Cadastro.Api\Cadastro.Api.csproj", "{52799CAC-5A10-4F0C-A695-4721FDB3ABDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadastro.Domain", "src\Cadastro.Domain\Cadastro.Domain.csproj", "{0991302D-6E09-448D-8623-19C3952A6681}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadastro.Cliente.Domain", "src\Cadastro.Domain\Cadastro.Cliente.Domain.csproj", "{0991302D-6E09-448D-8623-19C3952A6681}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadastro.Infra", "src\Cadastro.Infra\Cadastro.Infra.csproj", "{6CF4A49F-249B-4A8A-BA39-D0429F304F8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadastro.Cliente.Infra.Data", "src\Cadastro.Infra\Cadastro.Cliente.Infra.Data.csproj", "{6CF4A49F-249B-4A8A-BA39-D0429F304F8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadastro.Application", "src\Cadastro.Application\Cadastro.Application.csproj", "{8DF62B35-7E89-4E1D-92E8-AAD3FCAD713D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadastro.Cliente.Application", "src\Cadastro.Application\Cadastro.Cliente.Application.csproj", "{8DF62B35-7E89-4E1D-92E8-AAD3FCAD713D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadastro.Core", "src\Cadastro.Core\Cadastro.Core.csproj", "{771EFA4B-194E-4F2F-9FFD-84EC4C98DF08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{8DF62B35-7E89-4E1D-92E8-AAD3FCAD713D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DF62B35-7E89-4E1D-92E8-AAD3FCAD713D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DF62B35-7E89-4E1D-92E8-AAD3FCAD713D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{771EFA4B-194E-4F2F-9FFD-84EC4C98DF08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{771EFA4B-194E-4F2F-9FFD-84EC4C98DF08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{771EFA4B-194E-4F2F-9FFD-84EC4C98DF08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{771EFA4B-194E-4F2F-9FFD-84EC4C98DF08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

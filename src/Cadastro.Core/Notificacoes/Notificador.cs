@@ -1,6 +1,6 @@
-﻿using Cadastro.Application.Interfaces;
+﻿using Cadastro.Core.Interfaces;
 
-namespace Cadastro.Application.Notificacoes
+namespace Cadastro.Core.Notificacoes
 {
     public class Notificador : INotificador
     {

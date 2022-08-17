@@ -1,4 +1,4 @@
-﻿namespace Cadastro.Application.Notificacoes
+﻿namespace Cadastro.Core.Notificacoes
 {
     public class Notificacao
     {

@@ -1,4 +1,4 @@
-﻿using Cadastro.Application.Interfaces;
+﻿using Cadastro.Core.Interfaces;
 using System.Security.Claims;
 
 namespace Cadastro.Api.Extensions

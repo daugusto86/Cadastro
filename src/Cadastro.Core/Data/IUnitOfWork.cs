@@ -1,4 +1,4 @@
-﻿namespace Cadastro.Domain.Interfaces
+﻿namespace Cadastro.Core.Data
 {
     public interface IUnitOfWork
     {

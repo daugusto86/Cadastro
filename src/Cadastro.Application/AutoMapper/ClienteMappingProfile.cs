@@ -1,20 +1,14 @@
 ﻿using AutoMapper;
-using Cadastro.Application.ViewModels;
-using Cadastro.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Cadastro.Cliente.Application.ViewModels;
 
-namespace Cadastro.Application.AutoMapper
+namespace Cadastro.Cliente.Application.AutoMapper
 {
     public class ClienteMappingProfile : Profile
     {
         public ClienteMappingProfile()
         {
-            CreateMap<Cliente, ClienteViewModel>().ReverseMap()
-                .ConstructUsing(x => new Cliente(x.Nome, x.Cpf, x.Email, x.DataCadastro));
+            CreateMap<Domain.Models.Cliente, ClienteViewModel>().ReverseMap()
+                .ConstructUsing(x => new Domain.Models.Cliente(x.Nome, x.Cpf, x.Email, x.DataCadastro));
         }
     }
 }

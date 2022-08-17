@@ -1,12 +1,51 @@
-﻿using Cadastro.Domain.Interfaces;
-using Cadastro.Domain.Models;
-using Cadastro.Infra.Context;
+﻿using Cadastro.Cliente.Domain.Interfaces;
+using Cadastro.Cliente.Infra.Data.Context;
+using Cadastro.Core.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
-namespace Cadastro.Infra.Repository
+namespace Cadastro.Cliente.Infra.Data.Repository
 {
-    public class ClienteRepository : Repository<Cliente>, IClienteRepository
+    public class ClienteRepository : IClienteRepository
     {
+        private readonly CadastroContext context;
+        public IUnitOfWork UnitOfWork => context;
+
         public ClienteRepository(CadastroContext context)
-            : base(context) { }
+        {
+            this.context = context;
+        }
+
+        public async Task<List<Domain.Models.Cliente>> ObterTodos()
+        {
+            return await context.Clientes.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<Domain.Models.Cliente> ObterPorId(Guid id)
+        {
+            return await context.Clientes.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<Domain.Models.Cliente>> Buscar(Expression<Func<Domain.Models.Cliente, bool>> predicate)
+        {
+            return await context.Clientes.AsNoTracking().Where(predicate).ToListAsync();
+        }
+
+        public void Adicionar(Domain.Models.Cliente entity)
+        {
+            context.Clientes.Add(entity);
+        }
+
+        public void Atualizar(Domain.Models.Cliente entity)
+        {
+            context.Clientes.Update(entity);
+        }
+
+        public void Remover(Guid id)
+        {
+            context.Clientes.Remove(new Domain.Models.Cliente { Id = id });
+        }
+
+        public void Dispose() => context?.Dispose();
     }
 }

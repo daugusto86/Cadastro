@@ -1,15 +1,14 @@
-﻿using Cadastro.Domain.Interfaces;
-using Cadastro.Domain.Models;
+﻿using Cadastro.Core.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Cadastro.Infra.Context
+namespace Cadastro.Cliente.Infra.Data.Context
 {
     public class CadastroContext : DbContext, IUnitOfWork
     {
-        public CadastroContext(DbContextOptions<CadastroContext> options) 
+        public CadastroContext(DbContextOptions<CadastroContext> options)
             : base(options) { }
-        
-        public DbSet<Cliente> Clientes { get; set; }
+
+        public DbSet<Domain.Models.Cliente> Clientes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

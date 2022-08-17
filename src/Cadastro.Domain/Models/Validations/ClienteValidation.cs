@@ -1,7 +1,7 @@
-﻿using Cadastro.Domain.Models.Validations.Documentos;
+﻿using Cadastro.Cliente.Domain.Models.Validations.Documentos;
 using FluentValidation;
 
-namespace Cadastro.Domain.Models.Validations
+namespace Cadastro.Cliente.Domain.Models.Validations
 {
     public class ClienteValidation : AbstractValidator<Cliente>
     {

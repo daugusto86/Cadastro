@@ -1,10 +1,11 @@
-﻿using Cadastro.Domain.Models.Validations;
+﻿using Cadastro.Core.DomainObjects;
+using Cadastro.Cliente.Domain.Models.Validations;
 using FluentValidation.Results;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Cadastro.Domain.Models
+namespace Cadastro.Cliente.Domain.Models
 {
-    public class Cliente : Entity
+    public class Cliente : Entity, IAggregateRoot
     {
         public string Nome { get; private set; }
         public string Cpf { get; private set; }

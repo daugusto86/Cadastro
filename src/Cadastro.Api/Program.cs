@@ -1,5 +1,5 @@
 using Cadastro.Api.Configuration;
-using Cadastro.Infra.Context;
+using Cadastro.Cliente.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,4 +1,4 @@
-﻿namespace Cadastro.Domain.Models
+﻿namespace Cadastro.Core.DomainObjects
 {
     public abstract class Entity
     {

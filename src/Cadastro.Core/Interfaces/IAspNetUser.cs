@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace Cadastro.Application.Interfaces
+namespace Cadastro.Core.Interfaces
 {
     public interface IAspNetUser
     {

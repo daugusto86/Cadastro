@@ -1,10 +1,10 @@
-﻿using Cadastro.Application.Interfaces;
-using Cadastro.Application.Notificacoes;
-using Cadastro.Domain.Models;
+﻿using Cadastro.Core.DomainObjects;
+using Cadastro.Core.Interfaces;
+using Cadastro.Core.Notificacoes;
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace Cadastro.Application.Services
+namespace Cadastro.Cliente.Application.Services
 {
     public abstract class BaseService
     {

@@ -1,9 +1,9 @@
-﻿using Cadastro.Domain.Models;
+﻿using Cadastro.Core.DomainObjects;
 using System.Linq.Expressions;
 
-namespace Cadastro.Domain.Interfaces
+namespace Cadastro.Core.Data
 {
-    public interface IRepository<TEntity> : IDisposable where TEntity : Entity
+    public interface IRepository<TEntity> : IDisposable where TEntity : IAggregateRoot
     {
         IUnitOfWork UnitOfWork { get; }
         Task<TEntity> ObterPorId(Guid id);

@@ -23,8 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cadastro.Application\Cadastro.Application.csproj" />
-    <ProjectReference Include="..\Cadastro.Infra\Cadastro.Infra.csproj" />
+    <ProjectReference Include="..\Cadastro.Application\Cadastro.Cliente.Application.csproj" />
+    <ProjectReference Include="..\Cadastro.Core\Cadastro.Core.csproj" />
+    <ProjectReference Include="..\Cadastro.Infra\Cadastro.Cliente.Infra.Data.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="https://carafe.fm/schema/draft-02/bundle.schema.json" /></VisualStudio></ProjectExtensions>

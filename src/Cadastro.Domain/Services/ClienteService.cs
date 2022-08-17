@@ -1,7 +1,6 @@
-﻿using Cadastro.Domain.Interfaces;
-using Cadastro.Domain.Models;
+﻿using Cadastro.Cliente.Domain.Interfaces;
 
-namespace Cadastro.Domain.Services
+namespace Cadastro.Cliente.Domain.Services
 {
     public class ClienteService : IClienteService
     {
@@ -12,34 +11,34 @@ namespace Cadastro.Domain.Services
             this.clienteRepository = clienteRepository;
         }
 
-        public async Task<IEnumerable<Cliente>> ObterTodos()
+        public async Task<IEnumerable<Models.Cliente>> ObterTodos()
         {
             return await clienteRepository.ObterTodos();
         }
 
-        public async Task<IEnumerable<Cliente>> ObterPorNome(string nome)
+        public async Task<IEnumerable<Models.Cliente>> ObterPorNome(string nome)
         {
             return await clienteRepository.Buscar(x => x.Nome == nome);
         }
 
-        public async Task<Cliente> ObterPorId(Guid id)
+        public async Task<Models.Cliente> ObterPorId(Guid id)
         {
             return await clienteRepository.ObterPorId(id);
         }
 
-        public async Task<Cliente> ObterPorEmail(string email)
+        public async Task<Models.Cliente> ObterPorEmail(string email)
         {
             return (await clienteRepository.Buscar(x => x.Email == email))
                 .FirstOrDefault();
         }
 
-        public async Task<bool> Adicionar(Cliente cliente)
+        public async Task<bool> Adicionar(Models.Cliente cliente)
         {
             clienteRepository.Adicionar(cliente);
             return await clienteRepository.UnitOfWork.Commit();
         }
 
-        public async Task<bool> Atualizar(Cliente cliente)
+        public async Task<bool> Atualizar(Models.Cliente cliente)
         {
             clienteRepository.Atualizar(cliente);
             return await clienteRepository.UnitOfWork.Commit();

@@ -1,6 +1,5 @@
-﻿using Cadastro.Application.Interfaces;
-using Cadastro.Application.Notificacoes;
-using Microsoft.AspNetCore.Http;
+﻿using Cadastro.Core.Interfaces;
+using Cadastro.Core.Notificacoes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
