@@ -15,6 +15,6 @@ namespace Cadastro.Cliente.Domain.Interfaces
 
         void Atualizar(Models.Cliente entity);
 
-        void Remover(Guid id);
+        Task Remover(Guid id);
     }
 }

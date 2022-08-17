@@ -12,18 +12,17 @@ namespace Cadastro.Cliente.Domain.Models
         public string Email { get; private set; }
         public DateTime DataCadastro { get; private set; }
 
-        [NotMapped]
-        public ValidationResult ValidationResult { get; private set; }
-
         public Cliente(string nome, string cpf, string email, DateTime dataCadastro)
         {
             Nome = nome;
             Cpf = cpf;
             Email = email;
             DataCadastro = dataCadastro;
+
+            EhValida();
         }
 
-        public Cliente()
+        protected Cliente()
         {
 
         }

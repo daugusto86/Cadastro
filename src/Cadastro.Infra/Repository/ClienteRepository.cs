@@ -38,12 +38,14 @@ namespace Cadastro.Cliente.Infra.Data.Repository
 
         public void Atualizar(Domain.Models.Cliente entity)
         {
+            context.Entry(entity).Property(x => x.DataCadastro).IsModified = false;
             context.Clientes.Update(entity);
         }
 
-        public void Remover(Guid id)
+        public async Task Remover(Guid id)
         {
-            context.Clientes.Remove(new Domain.Models.Cliente { Id = id });
+            var cliente = await context.Clientes.FindAsync(id);
+            context.Clientes.Remove(cliente);
         }
 
         public void Dispose() => context?.Dispose();
