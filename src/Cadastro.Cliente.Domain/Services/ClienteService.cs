@@ -1,14 +1,18 @@
-﻿using Cadastro.Cliente.Domain.Interfaces;
+﻿using Cadastro.Cliente.Domain.Events;
+using Cadastro.Cliente.Domain.Interfaces;
+using Cadastro.Core.Mediator;
 
 namespace Cadastro.Cliente.Domain.Services
 {
     public class ClienteService : IClienteService
     {
         private readonly IClienteRepository clienteRepository;
+        private readonly IMediatorHandler mediator;
 
-        public ClienteService(IClienteRepository clienteRepository)
+        public ClienteService(IClienteRepository clienteRepository, IMediatorHandler mediator)
         {
             this.clienteRepository = clienteRepository;
+            this.mediator = mediator;
         }
 
         public async Task<IEnumerable<Models.Cliente>> ObterTodos()
@@ -35,6 +39,9 @@ namespace Cadastro.Cliente.Domain.Services
         public async Task<bool> Adicionar(Models.Cliente cliente)
         {
             clienteRepository.Adicionar(cliente);
+
+            await mediator.PublicarEvento(new NotificarCadastroEvent(cliente.Id, cliente.Cpf, cliente.Email));
+
             return await clienteRepository.UnitOfWork.Commit();
         }
 
@@ -46,7 +53,7 @@ namespace Cadastro.Cliente.Domain.Services
 
         public async Task<bool> Remover(Guid id)
         {
-            clienteRepository.Remover(id);
+            await clienteRepository.Remover(id);
             return await clienteRepository.UnitOfWork.Commit();
         }
     }

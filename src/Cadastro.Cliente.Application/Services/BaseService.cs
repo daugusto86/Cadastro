@@ -28,14 +28,11 @@ namespace Cadastro.Cliente.Application.Services
             notificador.Handle(new Notificacao(mensagem));
         }
 
-        protected bool ExecutarValidacao<TV, TE>(TV validacao, TE entidade) where TV : AbstractValidator<TE> where TE : Entity
+        protected bool ExecutarValidacao(ValidationResult validationResult)
         {
-            var validator = validacao.Validate(entidade);
+            if (validationResult.IsValid) return true;
 
-            if (validator.IsValid) return true;
-
-            Notificar(validator);
-
+            Notificar(validationResult);
             return false;
         }
     }

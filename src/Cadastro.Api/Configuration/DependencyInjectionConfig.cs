@@ -1,11 +1,12 @@
 ﻿using Cadastro.Api.Extensions;
-using Cadastro.Cliente.Application.Services;
+using Cadastro.Cliente.Domain.Events;
 using Cadastro.Cliente.Domain.Interfaces;
-using Cadastro.Cliente.Domain.Services;
 using Cadastro.Cliente.Infra.Data.Context;
 using Cadastro.Cliente.Infra.Data.Repository;
 using Cadastro.Core.Interfaces;
+using Cadastro.Core.Mediator;
 using Cadastro.Core.Notificacoes;
+using MediatR;
 
 namespace Cadastro.Api.Configuration
 {
@@ -19,8 +20,8 @@ namespace Cadastro.Api.Configuration
             // repositories
             services.AddScoped<IClienteRepository, ClienteRepository>();
 
-            // services
-            services.AddScoped<Cliente.Application.Interfaces.IClienteService, Cadastro.Cliente.Application.Services.ClienteService>();
+            // app services
+            services.AddScoped<Cliente.Application.Interfaces.IClienteService, Cliente.Application.Services.ClienteService>();
 
             // notificador
             services.AddScoped<INotificador, Notificador>();
@@ -28,7 +29,16 @@ namespace Cadastro.Api.Configuration
             // domain services
             services.AddScoped<IClienteService, Cliente.Domain.Services.ClienteService>();
 
+            //domain events
+            services.AddScoped<INotificationHandler<NotificarCadastroEvent>, ClienteEventHandler>();
+
+            // mediator
+            services.AddScoped<IMediatorHandler, MediatorHandler>();
+
+            // context
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // asp net user extension
             services.AddScoped<IAspNetUser, AspNetUser>();
             
             // TODO

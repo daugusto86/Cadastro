@@ -1,7 +1,6 @@
-﻿using Cadastro.Core.DomainObjects;
-using Cadastro.Cliente.Domain.Models.Validations;
+﻿using Cadastro.Cliente.Domain.Models.Validations;
+using Cadastro.Core.DomainObjects;
 using FluentValidation.Results;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cadastro.Cliente.Domain.Models
 {

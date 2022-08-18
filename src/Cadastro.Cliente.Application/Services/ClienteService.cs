@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Cadastro.Cliente.Application.ViewModels;
-using Cadastro.Cliente.Domain.Models.Validations;
 using Cadastro.Core.Interfaces;
 
 namespace Cadastro.Cliente.Application.Services
@@ -46,7 +45,7 @@ namespace Cadastro.Cliente.Application.Services
         public async Task<bool> Adicionar(ClienteViewModel cliente)
         {
             var model = mapper.Map<Domain.Models.Cliente>(cliente);
-            if (!ExecutarValidacao(new ClienteValidation(), model))
+            if (!ExecutarValidacao(model.ValidationResult))
                 return false;
 
             return await clienteService.Adicionar(model);
@@ -55,7 +54,7 @@ namespace Cadastro.Cliente.Application.Services
         public async Task<bool> Atualizar(ClienteViewModel cliente)
         {
             var model = mapper.Map<Domain.Models.Cliente>(cliente);
-            if (!ExecutarValidacao(new ClienteValidation(), model))
+            if (!ExecutarValidacao(model.ValidationResult))
                 return false;
 
             return await clienteService.Atualizar(model);

@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadastro.Cliente.Infra.Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadastro.Cliente.Application", "src\Cadastro.Cliente.Application\Cadastro.Cliente.Application.csproj", "{8DF62B35-7E89-4E1D-92E8-AAD3FCAD713D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadastro.Core", "src\Cadastro.Core\Cadastro.Core.csproj", "{771EFA4B-194E-4F2F-9FFD-84EC4C98DF08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cadastro.Core", "src\Cadastro.Core\Cadastro.Core.csproj", "{771EFA4B-194E-4F2F-9FFD-84EC4C98DF08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadastro.Cliente.Infra.Messages", "src\Cadastro.Cliente.Infra.Messages\Cadastro.Cliente.Infra.Messages.csproj", "{4CF807C0-6107-4B63-87F1-FA65F9943F1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{771EFA4B-194E-4F2F-9FFD-84EC4C98DF08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{771EFA4B-194E-4F2F-9FFD-84EC4C98DF08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{771EFA4B-194E-4F2F-9FFD-84EC4C98DF08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CF807C0-6107-4B63-87F1-FA65F9943F1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CF807C0-6107-4B63-87F1-FA65F9943F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CF807C0-6107-4B63-87F1-FA65F9943F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CF807C0-6107-4B63-87F1-FA65F9943F1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
