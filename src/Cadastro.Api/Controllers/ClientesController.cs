@@ -53,7 +53,7 @@ namespace Cadastro.Api.Controllers
         [Authorize]
         [ClaimsAuthorize("Cliente", "Adicionar")]
         [HttpPost]
-        public async Task<ActionResult<ClienteViewModel>> Adicionar(ClienteViewModel cliente)
+        public async Task<ActionResult<ClienteViewModel>> Adicionar(NovoClienteViewModel cliente)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 

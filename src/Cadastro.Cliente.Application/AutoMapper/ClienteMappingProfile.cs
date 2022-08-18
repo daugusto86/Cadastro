@@ -8,7 +8,10 @@ namespace Cadastro.Cliente.Application.AutoMapper
         public ClienteMappingProfile()
         {
             CreateMap<Domain.Models.Cliente, ClienteViewModel>().ReverseMap()
-                .ConstructUsing(x => new Domain.Models.Cliente(x.Nome, x.Cpf, x.Email, x.DataCadastro));
+                .ConstructUsing(x => new Domain.Models.Cliente(x.Nome, x.Cpf, x.Email));
+
+            CreateMap<Domain.Models.Cliente, NovoClienteViewModel>().ReverseMap()
+                .ConstructUsing(x => new Domain.Models.Cliente(x.Nome, x.Cpf, x.Email));
         }
     }
 }

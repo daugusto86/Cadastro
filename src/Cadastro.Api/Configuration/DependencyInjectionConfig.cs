@@ -3,6 +3,7 @@ using Cadastro.Cliente.Domain.Events;
 using Cadastro.Cliente.Domain.Interfaces;
 using Cadastro.Cliente.Infra.Data.Context;
 using Cadastro.Cliente.Infra.Data.Repository;
+using Cadastro.Cliente.Infra.Messages;
 using Cadastro.Core.Interfaces;
 using Cadastro.Core.Mediator;
 using Cadastro.Core.Notificacoes;
@@ -34,6 +35,9 @@ namespace Cadastro.Api.Configuration
 
             // mediator
             services.AddScoped<IMediatorHandler, MediatorHandler>();
+
+            // infra messages services
+            services.AddScoped<IEmailService, EmailService>();
 
             // context
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

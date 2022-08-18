@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cadastro.Cliente.Application\Cadastro.Cliente.Application.csproj" />
+    <ProjectReference Include="..\Cadastro.Cliente.Infra.Messages\Cadastro.Cliente.Infra.Messages.csproj" />
     <ProjectReference Include="..\Cadastro.Core\Cadastro.Core.csproj" />
     <ProjectReference Include="..\Cadastro.Cliente.Infra.Data\Cadastro.Cliente.Infra.Data.csproj" />
   </ItemGroup>

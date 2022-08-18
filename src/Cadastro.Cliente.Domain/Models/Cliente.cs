@@ -11,12 +11,14 @@ namespace Cadastro.Cliente.Domain.Models
         public string Email { get; private set; }
         public DateTime DataCadastro { get; private set; }
 
-        public Cliente(string nome, string cpf, string email, DateTime dataCadastro)
+        public Cliente(string nome, string cpf, string email)
         {
+            cpf = LimparCpf(cpf);
+            
             Nome = nome;
             Cpf = cpf;
             Email = email;
-            DataCadastro = dataCadastro;
+            DataCadastro = DateTime.Now;
 
             EhValida();
         }
@@ -35,6 +37,11 @@ namespace Cadastro.Cliente.Domain.Models
         {
             ValidationResult = new ClienteValidation().Validate(this);
             return ValidationResult.IsValid;
+        }
+
+        private string LimparCpf(string cpf)
+        {
+            return cpf?.Trim().Replace(".", "").Replace("-", "");
         }
     }
 }

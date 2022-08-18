@@ -42,7 +42,7 @@ namespace Cadastro.Cliente.Application.Services
             return mapper.Map<IEnumerable<ClienteViewModel>>(clientes);
         }
 
-        public async Task<bool> Adicionar(ClienteViewModel cliente)
+        public async Task<bool> Adicionar(NovoClienteViewModel cliente)
         {
             var model = mapper.Map<Domain.Models.Cliente>(cliente);
             if (!ExecutarValidacao(model.ValidationResult))

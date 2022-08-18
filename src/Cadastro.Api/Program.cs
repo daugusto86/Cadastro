@@ -1,5 +1,6 @@
 using Cadastro.Api.Configuration;
 using Cadastro.Cliente.Infra.Data.Context;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,8 @@ builder.Services.AddAutoMapperConfig();
 builder.Services.AddApiConfig();
 
 builder.Services.AddSwaggerConfig();
+
+builder.Services.AddMediatR(typeof(Program));
 
 builder.Services.ResolveDependencies();
 
