@@ -1,6 +1,7 @@
 ﻿using Cadastro.Cliente.Domain.Events;
 using Cadastro.Cliente.Domain.Interfaces;
 using Cadastro.Core.Mediator;
+using System.Linq.Expressions;
 
 namespace Cadastro.Cliente.Domain.Services
 {
@@ -34,6 +35,11 @@ namespace Cadastro.Cliente.Domain.Services
         {
             return (await clienteRepository.Buscar(x => x.Email == email))
                 .FirstOrDefault();
+        }
+
+        public async Task<IEnumerable<Models.Cliente>> Buscar(Expression<Func<Models.Cliente, bool>> predicate)
+        {
+            return await clienteRepository.Buscar(predicate);
         }
 
         public async Task<bool> Adicionar(Models.Cliente cliente)

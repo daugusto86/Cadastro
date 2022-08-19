@@ -48,16 +48,61 @@ namespace Cadastro.Cliente.Application.Services
             if (!ExecutarValidacao(model.ValidationResult))
                 return false;
 
+            if (await EmailUtilizado(model.Id, cliente.Email))
+                return false;
+
             return await clienteService.Adicionar(model);
         }
 
-        public async Task<bool> Atualizar(ClienteViewModel cliente)
+        public async Task<bool> Atualizar(AtualizarClienteViewModel cliente)
         {
-            var model = mapper.Map<Domain.Models.Cliente>(cliente);
+            var model = await clienteService.ObterPorId(cliente.Id);
+
+            if (model == null)
+            {
+                Notificar("Cliente não encontrado.");
+                return false;
+            }
+
+            model.MudarNome(cliente.Nome);
+
             if (!ExecutarValidacao(model.ValidationResult))
                 return false;
 
             return await clienteService.Atualizar(model);
+        }
+
+        public async Task<bool> AtualizarEmail(AtualizarEmailClienteViewModel cliente)
+        {
+            var model = await clienteService.ObterPorId(cliente.Id);
+
+            if (model == null)
+            {
+                Notificar("Cliente não encontrado.");
+                return false;
+            }
+
+            if (await EmailUtilizado(cliente.Id, cliente.Email))
+                return false;
+
+            model.MudarEmail(cliente.Email);
+
+            if (!ExecutarValidacao(model.ValidationResult))
+                return false;
+
+            return await clienteService.Atualizar(model);
+        }
+
+        private async Task<bool> EmailUtilizado(Guid id, string email)
+        {
+            var emailJaCadastrado = await clienteService.Buscar(x => x.Email == email && x.Id != id);
+            if (emailJaCadastrado != null)
+            {
+                Notificar("O e-mail informado já está utilizado. Informe outro.");
+                return true;
+            }
+
+            return false;
         }
 
         public async Task<bool> Remover(Guid id)

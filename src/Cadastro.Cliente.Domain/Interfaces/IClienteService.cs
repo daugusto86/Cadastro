@@ -1,4 +1,6 @@
 ﻿
+using System.Linq.Expressions;
+
 namespace Cadastro.Cliente.Domain.Interfaces
 {
     public interface IClienteService
@@ -7,6 +9,7 @@ namespace Cadastro.Cliente.Domain.Interfaces
         Task<Models.Cliente> ObterPorId(Guid id);
         Task<Models.Cliente> ObterPorEmail(string email);
         Task<IEnumerable<Models.Cliente>> ObterPorNome(string nome);
+        Task<IEnumerable<Models.Cliente>> Buscar(Expression<Func<Models.Cliente, bool>> predicate);
         Task<bool> Adicionar(Models.Cliente cliente);
         Task<bool> Atualizar(Models.Cliente cliente);
         Task<bool> Remover(Guid id);

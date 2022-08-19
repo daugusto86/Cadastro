@@ -11,7 +11,8 @@ namespace Cadastro.Cliente.Application.AutoMapper
                 .ConstructUsing(x => new Domain.Models.Cliente(x.Nome, x.Cpf, x.Email));
 
             CreateMap<Domain.Models.Cliente, NovoClienteViewModel>().ReverseMap()
-                .ConstructUsing(x => new Domain.Models.Cliente(x.Nome, x.Cpf, x.Email));
+                .ConstructUsing(x => new Domain.Models.Cliente(x.Nome, x.Cpf, x.Email))
+                .IgnoreAllPropertiesWithAnInaccessibleSetter();
         }
     }
 }

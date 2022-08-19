@@ -13,10 +13,8 @@ namespace Cadastro.Cliente.Domain.Models
 
         public Cliente(string nome, string cpf, string email)
         {
-            cpf = LimparCpf(cpf);
-            
             Nome = nome;
-            Cpf = cpf;
+            Cpf = LimparCpf(cpf);
             Email = email;
             DataCadastro = DateTime.Now;
 
@@ -31,6 +29,13 @@ namespace Cadastro.Cliente.Domain.Models
         public void MudarNome(string nome)
         {
             Nome = nome;
+            EhValida();
+        }
+
+        public void MudarEmail(string email)
+        {
+            Email = email;
+            EhValida();
         }
 
         public bool EhValida()
@@ -39,7 +44,7 @@ namespace Cadastro.Cliente.Domain.Models
             return ValidationResult.IsValid;
         }
 
-        private string LimparCpf(string cpf)
+        private static string LimparCpf(string cpf)
         {
             return cpf?.Trim().Replace(".", "").Replace("-", "");
         }

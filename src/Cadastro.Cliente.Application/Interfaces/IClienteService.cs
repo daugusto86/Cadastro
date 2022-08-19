@@ -9,7 +9,8 @@ namespace Cadastro.Cliente.Application.Interfaces
         Task<ClienteViewModel> ObterPorEmail(string email);
         Task<IEnumerable<ClienteViewModel>> ObterPorNome(string nome);
         Task<bool> Adicionar(NovoClienteViewModel cliente);
-        Task<bool> Atualizar(ClienteViewModel cliente);
+        Task<bool> Atualizar(AtualizarClienteViewModel cliente);
+        Task<bool> AtualizarEmail(AtualizarEmailClienteViewModel cliente);
         Task<bool> Remover(Guid id);
     }
 }

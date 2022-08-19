@@ -53,7 +53,7 @@ namespace Cadastro.Api.Controllers
         [Authorize]
         [ClaimsAuthorize("Cliente", "Adicionar")]
         [HttpPost]
-        public async Task<ActionResult<ClienteViewModel>> Adicionar(NovoClienteViewModel cliente)
+        public async Task<ActionResult<NovoClienteViewModel>> Adicionar(NovoClienteViewModel cliente)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
@@ -65,7 +65,7 @@ namespace Cadastro.Api.Controllers
         [Authorize]
         [ClaimsAuthorize("Cliente", "Atualizar")]
         [HttpPut("{id:guid}")]
-        public async Task<ActionResult<ClienteViewModel>> Atualizar(Guid id, ClienteViewModel cliente)
+        public async Task<ActionResult<AtualizarClienteViewModel>> Atualizar(Guid id, AtualizarClienteViewModel cliente)
         {
             if (id != cliente.Id)
             {
@@ -76,6 +76,24 @@ namespace Cadastro.Api.Controllers
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             await clienteService.Atualizar(cliente);
+
+            return CustomResponse(cliente);
+        }
+
+        [Authorize]
+        [ClaimsAuthorize("Cliente", "Atualizar")]
+        [HttpPut("atualizar-email/{id:guid}")]
+        public async Task<ActionResult<AtualizarEmailClienteViewModel>> AtualizarEmail(Guid id, AtualizarEmailClienteViewModel cliente)
+        {
+            if (id != cliente.Id)
+            {
+                NotificarErro("Id informado na query diferente do Id informado no post");
+                return CustomResponse(cliente);
+            }
+
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            await clienteService.AtualizarEmail(cliente);
 
             return CustomResponse(cliente);
         }
