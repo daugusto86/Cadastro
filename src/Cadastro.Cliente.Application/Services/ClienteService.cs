@@ -48,7 +48,10 @@ namespace Cadastro.Cliente.Application.Services
             if (!ExecutarValidacao(model.ValidationResult))
                 return false;
 
-            if (await EmailUtilizado(model.Id, cliente.Email))
+            if (!await EmailValido(model.Id, cliente.Email))
+                return false;
+
+            if (!await CpfValido(model.Id, cliente.Cpf))
                 return false;
 
             return await clienteService.Adicionar(model);
@@ -82,7 +85,7 @@ namespace Cadastro.Cliente.Application.Services
                 return false;
             }
 
-            if (await EmailUtilizado(cliente.Id, cliente.Email))
+            if (!await EmailValido(cliente.Id, cliente.Email))
                 return false;
 
             model.MudarEmail(cliente.Email);
@@ -93,15 +96,24 @@ namespace Cadastro.Cliente.Application.Services
             return await clienteService.Atualizar(model);
         }
 
-        private async Task<bool> EmailUtilizado(Guid id, string email)
+        private async Task<bool> EmailValido(Guid id, string email)
         {
-            var emailJaCadastrado = await clienteService.Buscar(x => x.Email == email && x.Id != id);
-            if (emailJaCadastrado != null)
-            {
-                Notificar("O e-mail informado já está utilizado. Informe outro.");
-                return true;
-            }
+            var emUso = (await clienteService.Buscar(x => x.Email == email && x.Id != id)).Any();
+            
+            if (!emUso) return true;
 
+            Notificar("O e-mail informado já está utilizado. Informe outro.");
+            return false;
+        }
+
+        private async Task<bool> CpfValido(Guid id, string cpf)
+        {
+            cpf = cpf?.Trim().Replace(".", "").Replace("-", "");
+            var emUso = (await clienteService.Buscar(x => x.Cpf == cpf)).Any();
+            
+            if (!emUso) return true;
+
+            Notificar("O CPF informado já está cadastrado no sistema.");
             return false;
         }
 

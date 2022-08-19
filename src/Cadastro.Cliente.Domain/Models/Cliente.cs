@@ -6,10 +6,17 @@ namespace Cadastro.Cliente.Domain.Models
 {
     public class Cliente : Entity, IAggregateRoot
     {
+        // TODO:
+        // criar propriedade de Inativo
+        // criar value object para cpf e email
+        // criar entidade filha endereço, vai ser uma lista
+        // implementar paginação 
+
         public string Nome { get; private set; }
         public string Cpf { get; private set; }
         public string Email { get; private set; }
         public DateTime DataCadastro { get; private set; }
+        public bool Ativo { get; set; }
 
         public Cliente(string nome, string cpf, string email)
         {
@@ -17,6 +24,7 @@ namespace Cadastro.Cliente.Domain.Models
             Cpf = LimparCpf(cpf);
             Email = email;
             DataCadastro = DateTime.Now;
+            Ativo = true;
 
             EhValida();
         }
@@ -37,6 +45,9 @@ namespace Cadastro.Cliente.Domain.Models
             Email = email;
             EhValida();
         }
+
+        public void Ativar() => Ativo = true;
+        public void Desativar() => Ativo = false;
 
         public bool EhValida()
         {

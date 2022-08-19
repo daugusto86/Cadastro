@@ -25,6 +25,10 @@ namespace Cadastro.Cliente.Infra.Data.Mappings
                 .IsRequired()
                 .HasColumnType("datetime");
 
+            builder.Property(x => x.Ativo)
+                .IsRequired()
+                .HasColumnType("bit");
+            
             builder.ToTable("Clientes");
         }
     }
