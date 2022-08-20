@@ -16,7 +16,7 @@ namespace Cadastro.Cliente.Domain.Models
         public string Cpf { get; private set; }
         public string Email { get; private set; }
         public DateTime DataCadastro { get; private set; }
-        public bool Ativo { get; set; }
+        public bool Ativo { get; private set; }
 
         public Cliente(string nome, string cpf, string email)
         {
