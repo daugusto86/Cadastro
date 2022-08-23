@@ -46,7 +46,7 @@ namespace Cadastro.Cliente.Domain.Services
         {
             clienteRepository.Adicionar(cliente);
 
-            await mediator.PublicarEvento(new NotificarCadastroEvent(cliente.Id, cliente.Cpf, cliente.Email));
+            await mediator.PublicarEvento(new NotificarCadastroEvent(cliente.Id, cliente.Cpf.Numero, cliente.Email));
 
             return await clienteRepository.UnitOfWork.Commit();
         }

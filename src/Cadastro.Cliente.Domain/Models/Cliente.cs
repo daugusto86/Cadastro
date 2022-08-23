@@ -13,7 +13,7 @@ namespace Cadastro.Cliente.Domain.Models
         // implementar paginação 
 
         public string Nome { get; private set; }
-        public string Cpf { get; private set; }
+        public Cpf Cpf { get; private set; }
         public string Email { get; private set; }
         public DateTime DataCadastro { get; private set; }
         public bool Ativo { get; private set; }
@@ -21,7 +21,7 @@ namespace Cadastro.Cliente.Domain.Models
         public Cliente(string nome, string cpf, string email)
         {
             Nome = nome;
-            Cpf = LimparCpf(cpf);
+            Cpf = new Cpf(cpf);
             Email = email;
             DataCadastro = DateTime.Now;
             Ativo = true;
@@ -53,11 +53,6 @@ namespace Cadastro.Cliente.Domain.Models
         {
             ValidationResult = new ClienteValidation().Validate(this);
             return ValidationResult.IsValid;
-        }
-
-        private static string LimparCpf(string cpf)
-        {
-            return cpf?.Trim().Replace(".", "").Replace("-", "");
         }
     }
 }

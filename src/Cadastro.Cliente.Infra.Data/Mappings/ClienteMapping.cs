@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Cadastro.Core.DomainObjects;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Cadastro.Cliente.Infra.Data.Mappings
@@ -13,9 +14,14 @@ namespace Cadastro.Cliente.Infra.Data.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(255)");
 
-            builder.Property(x => x.Cpf)
+            builder.OwnsOne(x => x.Cpf, p =>
+            {
+                p.Property(x => x.Numero)
                 .IsRequired()
-                .HasColumnType("varchar(11)");
+                .HasMaxLength(Cpf.CpfMaxLength)
+                .HasColumnName("Cpf")
+                .HasColumnType($"varchar({Cpf.CpfMaxLength})");
+            });
 
             builder.Property(x => x.Email)
                 .IsRequired()

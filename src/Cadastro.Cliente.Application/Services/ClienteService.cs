@@ -109,7 +109,7 @@ namespace Cadastro.Cliente.Application.Services
         private async Task<bool> CpfValido(Guid id, string cpf)
         {
             cpf = cpf?.Trim().Replace(".", "").Replace("-", "");
-            var emUso = (await clienteService.Buscar(x => x.Cpf == cpf)).Any();
+            var emUso = (await clienteService.Buscar(x => x.Cpf.Numero == cpf && x.Id != id)).Any();
             
             if (!emUso) return true;
 

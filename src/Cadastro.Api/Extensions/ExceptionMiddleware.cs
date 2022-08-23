@@ -26,7 +26,16 @@ namespace Cadastro.Api.Extensions
         private static void HandleExceptionAsync(HttpContext context, Exception exception)
         {
             //log exception
+
+            var result = new
+            {
+                sucesso = false,
+                erros = exception?.Message
+            };
+
+            context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            context.Response.WriteAsJsonAsync(result);
         }
     }
 }
