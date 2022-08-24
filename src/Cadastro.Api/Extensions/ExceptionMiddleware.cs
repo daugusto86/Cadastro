@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Cadastro.Core.DomainObjects;
+using System.Net;
 
 namespace Cadastro.Api.Extensions
 {
@@ -30,9 +31,18 @@ namespace Cadastro.Api.Extensions
             var result = new
             {
                 sucesso = false,
-                erros = exception?.Message
+                erros = "Erro interno de Servidor"
             };
 
+            if (exception is DomainException)
+            {
+                result = new
+                {
+                    sucesso = false,
+                    erros = exception?.Message
+                };
+            }
+            
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             context.Response.WriteAsJsonAsync(result);

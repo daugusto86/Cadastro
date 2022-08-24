@@ -96,9 +96,46 @@ namespace Cadastro.Cliente.Application.Services
             return await clienteService.Atualizar(model);
         }
 
+        public async Task<ClienteViewModel> Ativar(Guid id)
+        {
+            var cliente = await clienteService.ObterPorId(id);
+
+            if (cliente == null)
+            {
+                Notificar("Cliente não encontrado.");
+                return null;
+            }
+
+            cliente.Ativar();
+            await clienteService.Atualizar(cliente);
+
+            return mapper.Map<ClienteViewModel>(cliente);
+        }
+
+        public async Task<ClienteViewModel> Desativar(Guid id)
+        {
+            var cliente = await clienteService.ObterPorId(id);
+
+            if (cliente == null)
+            {
+                Notificar("Cliente não encontrado.");
+                return null;
+            }
+
+            cliente.Desativar();
+            await clienteService.Atualizar(cliente);
+
+            return mapper.Map<ClienteViewModel>(cliente);
+        }
+
+        public async Task<bool> Remover(Guid id)
+        {
+            return await clienteService.Remover(id);
+        }
+
         private async Task<bool> EmailValido(Guid id, string email)
         {
-            var emUso = (await clienteService.Buscar(x => x.Email == email && x.Id != id)).Any();
+            var emUso = (await clienteService.Buscar(x => x.Email.Endereco == email && x.Id != id)).Any();
             
             if (!emUso) return true;
 
@@ -115,11 +152,6 @@ namespace Cadastro.Cliente.Application.Services
 
             Notificar("O CPF informado já está cadastrado no sistema.");
             return false;
-        }
-
-        public async Task<bool> Remover(Guid id)
-        {
-            return await clienteService.Remover(id);
         }
     }
 }

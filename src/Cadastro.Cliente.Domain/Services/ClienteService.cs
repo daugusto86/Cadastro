@@ -23,7 +23,7 @@ namespace Cadastro.Cliente.Domain.Services
 
         public async Task<IEnumerable<Models.Cliente>> ObterPorNome(string nome)
         {
-            return await clienteRepository.Buscar(x => x.Nome == nome);
+            return await clienteRepository.Buscar(x => x.Nome.Contains(nome));
         }
 
         public async Task<Models.Cliente> ObterPorId(Guid id)
@@ -33,7 +33,7 @@ namespace Cadastro.Cliente.Domain.Services
 
         public async Task<Models.Cliente> ObterPorEmail(string email)
         {
-            return (await clienteRepository.Buscar(x => x.Email == email))
+            return (await clienteRepository.Buscar(x => x.Email.Endereco == email))
                 .FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Cadastro.Cliente.Domain.Services
         {
             clienteRepository.Adicionar(cliente);
 
-            await mediator.PublicarEvento(new NotificarCadastroEvent(cliente.Id, cliente.Cpf.Numero, cliente.Email));
+            await mediator.PublicarEvento(new NotificarCadastroEvent(cliente.Id, cliente.Cpf.Numero, cliente.Email.Endereco));
 
             return await clienteRepository.UnitOfWork.Commit();
         }

@@ -14,7 +14,7 @@ namespace Cadastro.Cliente.Domain.Models
 
         public string Nome { get; private set; }
         public Cpf Cpf { get; private set; }
-        public string Email { get; private set; }
+        public Email Email { get; private set; }
         public DateTime DataCadastro { get; private set; }
         public bool Ativo { get; private set; }
 
@@ -22,7 +22,7 @@ namespace Cadastro.Cliente.Domain.Models
         {
             Nome = nome;
             Cpf = new Cpf(cpf);
-            Email = email;
+            Email = new Email(email);
             DataCadastro = DateTime.Now;
             Ativo = true;
 
@@ -42,8 +42,7 @@ namespace Cadastro.Cliente.Domain.Models
 
         public void MudarEmail(string email)
         {
-            Email = email;
-            EhValida();
+            Email = new Email(email);
         }
 
         public void Ativar() => Ativo = true;

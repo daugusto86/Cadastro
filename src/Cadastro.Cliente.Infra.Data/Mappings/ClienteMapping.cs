@@ -14,6 +14,7 @@ namespace Cadastro.Cliente.Infra.Data.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(255)");
 
+            // mapeamento de Objeto de Valor
             builder.OwnsOne(x => x.Cpf, p =>
             {
                 p.Property(x => x.Numero)
@@ -23,9 +24,15 @@ namespace Cadastro.Cliente.Infra.Data.Mappings
                 .HasColumnType($"varchar({Cpf.CpfMaxLength})");
             });
 
-            builder.Property(x => x.Email)
+            // mapeamento de Objeto de Valor
+            builder.OwnsOne(x => x.Email, p =>
+            {
+                p.Property(x => x.Endereco)
                 .IsRequired()
-                .HasColumnType("varchar(50)");
+                .HasMaxLength(Email.EnderecoMaxLength)
+                .HasColumnName("Email")
+                .HasColumnType($"varchar({Email.EnderecoMaxLength})");
+            });
 
             builder.Property(x => x.DataCadastro)
                 .IsRequired()

@@ -11,6 +11,8 @@ namespace Cadastro.Cliente.Application.Interfaces
         Task<bool> Adicionar(NovoClienteViewModel cliente);
         Task<bool> Atualizar(AtualizarClienteViewModel cliente);
         Task<bool> AtualizarEmail(AtualizarEmailClienteViewModel cliente);
+        Task<ClienteViewModel> Ativar(Guid id);
+        Task<ClienteViewModel> Desativar(Guid id);
         Task<bool> Remover(Guid id);
     }
 }

@@ -99,6 +99,26 @@ namespace Cadastro.Api.Controllers
         }
 
         [Authorize]
+        [ClaimsAuthorize("Cliente", "Atualizar")]
+        [HttpPut("ativar/{id:guid}")]
+        public async Task<ActionResult<ClienteViewModel>> Ativar(Guid id)
+        {
+            var clienteVm = await clienteService.Ativar(id);
+
+            return CustomResponse(clienteVm);
+        }
+
+        [Authorize]
+        [ClaimsAuthorize("Cliente", "Atualizar")]
+        [HttpPut("desativar/{id:guid}")]
+        public async Task<ActionResult<ClienteViewModel>> Desativar(Guid id)
+        {
+            var clienteVm = await clienteService.Desativar(id);
+
+            return CustomResponse(clienteVm);
+        }
+
+        [Authorize]
         [ClaimsAuthorize("Cliente", "Excluir")]
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<ClienteViewModel>> Excluir(Guid id)
