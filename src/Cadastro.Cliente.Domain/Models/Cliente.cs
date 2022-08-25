@@ -18,6 +18,8 @@ namespace Cadastro.Cliente.Domain.Models
         public DateTime DataCadastro { get; private set; }
         public bool Ativo { get; private set; }
 
+        public IReadOnlyCollection<Endereco> Enderecos { get; private set; }
+
         public Cliente(string nome, string cpf, string email)
         {
             Nome = nome;
