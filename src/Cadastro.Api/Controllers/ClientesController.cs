@@ -131,5 +131,46 @@ namespace Cadastro.Api.Controllers
 
             return CustomResponse(cliente);
         }
+
+        [Authorize]
+        [ClaimsAuthorize("Cliente", "Adicionar")]
+        [HttpPost("novo-endereco")]
+        public async Task<ActionResult<EnderecoViewModel>> AdicionarEndereco(EnderecoViewModel endereco)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            await clienteService.AdicionarEndereco(endereco);
+
+            return CustomResponse(endereco);
+        }
+
+        [Authorize]
+        [ClaimsAuthorize("Cliente", "Atualizar")]
+        [HttpPut("atualizar-endereco/{id:guid}")]
+        public async Task<ActionResult<EnderecoViewModel>> AtualizarEndereco(Guid id, EnderecoViewModel endereco)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            if (id != endereco.Id)
+            {
+                NotificarErro("Id informado na query diferente do Id informado no post");
+                return CustomResponse(endereco);
+            }
+
+            await clienteService.AtualizarEndereco(endereco);
+
+            return CustomResponse(endereco);
+        }
+
+        public async Task<ActionResult<EnderecoViewModel>> ExcluirEndereco(Guid id)
+        {
+            var endereco = await clienteService.ObterEnderecoPorId(id);
+
+            if (endereco == null) return NotFound();
+
+            await clienteService.RemoverEndereco(id);
+
+            return CustomResponse(endereco);
+        }
     }
 }

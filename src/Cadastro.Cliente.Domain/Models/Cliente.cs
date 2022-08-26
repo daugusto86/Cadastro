@@ -11,6 +11,8 @@ namespace Cadastro.Cliente.Domain.Models
         // criar value object para cpf e email
         // criar entidade filha endereço, vai ser uma lista
         // implementar paginação 
+        // criar testes unitários
+        // adicionar campo principal no endereco
 
         public string Nome { get; private set; }
         public Cpf Cpf { get; private set; }
@@ -18,7 +20,8 @@ namespace Cadastro.Cliente.Domain.Models
         public DateTime DataCadastro { get; private set; }
         public bool Ativo { get; private set; }
 
-        public IReadOnlyCollection<Endereco> Enderecos { get; private set; }
+        private readonly List<Endereco> enderecos = new();
+        public IReadOnlyCollection<Endereco> Enderecos => enderecos;
 
         public Cliente(string nome, string cpf, string email)
         {
@@ -49,6 +52,26 @@ namespace Cadastro.Cliente.Domain.Models
 
         public void Ativar() => Ativo = true;
         public void Desativar() => Ativo = false;
+
+        public void AdicionarEndereco(Endereco endereco)
+        {
+            if (enderecos.Any(x => x.Cep == endereco.Cep))
+                throw new DomainException("CEP já cadastrado.");
+
+            if (endereco.Principal)
+                enderecos.ForEach(x => x.DesmarcarComoPrincipal());
+
+            enderecos.Add(endereco);
+        }
+
+        public void RemoverEndereco(Guid id)
+        {
+            var endereco = enderecos.Find(x => x.Id == id);
+            if (endereco == null)
+                throw new DomainException("Endereço não encontrado.");
+            
+            enderecos.Remove(endereco);
+        }
 
         public bool EhValida()
         {

@@ -11,12 +11,14 @@ namespace Cadastro.Cliente.Domain.Models
         public string Cep { get; private set; }
         public string Cidade { get; private set; }
         public string Estado { get; private set; }
+        public bool Principal { get; private set; }
         public Guid IdCliente { get; private set; }
 
         // EF Relation
-        public Cliente Cliente { get; protected set; }
+        public Cliente Cliente { get; private set; }
 
-        public Endereco(string logradouro, string numero, string complemento, string bairro, string cep, string cidade, string estado, Guid idCliente)
+        public Endereco(string logradouro, string numero, string complemento, string bairro, 
+            string cep, string cidade, string estado, Guid idCliente, bool principal)
         {
             Logradouro = logradouro;
             Numero = numero;
@@ -26,9 +28,13 @@ namespace Cadastro.Cliente.Domain.Models
             Cidade = cidade;
             Estado = estado;
             IdCliente = idCliente;
+            Principal = principal;
         }
 
         // EF Constructor
         protected Endereco() { }
+
+        public void MarcarPrincipal() => Principal = true;
+        public void DesmarcarComoPrincipal() => Principal = false;
     }
 }

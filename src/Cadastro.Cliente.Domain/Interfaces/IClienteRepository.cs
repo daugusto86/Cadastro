@@ -1,4 +1,5 @@
-﻿using Cadastro.Core.Data;
+﻿using Cadastro.Cliente.Domain.Models;
+using Cadastro.Core.Data;
 using System.Linq.Expressions;
 
 namespace Cadastro.Cliente.Domain.Interfaces
@@ -11,10 +12,14 @@ namespace Cadastro.Cliente.Domain.Interfaces
 
         Task<IEnumerable<Models.Cliente>> Buscar(Expression<Func<Models.Cliente, bool>> predicate);
 
+        Task<Endereco> ObterEnderecoPorId(Guid id);
+
         void Adicionar(Models.Cliente entity);
 
         void Atualizar(Models.Cliente entity);
 
         Task Remover(Guid id);
+
+        Task RemoverEndereco(Guid id);
     }
 }

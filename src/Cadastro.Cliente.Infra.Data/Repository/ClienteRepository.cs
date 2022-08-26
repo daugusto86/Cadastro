@@ -1,4 +1,5 @@
 ﻿using Cadastro.Cliente.Domain.Interfaces;
+using Cadastro.Cliente.Domain.Models;
 using Cadastro.Cliente.Infra.Data.Context;
 using Cadastro.Core.Data;
 using Microsoft.EntityFrameworkCore;
@@ -23,12 +24,19 @@ namespace Cadastro.Cliente.Infra.Data.Repository
 
         public async Task<Domain.Models.Cliente> ObterPorId(Guid id)
         {
-            return await context.Clientes.FindAsync(id);
+            return await context.Clientes
+                .Include(x => x.Enderecos)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IEnumerable<Domain.Models.Cliente>> Buscar(Expression<Func<Domain.Models.Cliente, bool>> predicate)
         {
             return await context.Clientes.AsNoTracking().Where(predicate).ToListAsync();
+        }
+
+        public async Task<Endereco> ObterEnderecoPorId(Guid id)
+        {
+            return await context.Enderecos.FindAsync(id);
         }
 
         public void Adicionar(Domain.Models.Cliente entity)
@@ -46,6 +54,12 @@ namespace Cadastro.Cliente.Infra.Data.Repository
         {
             var cliente = await context.Clientes.FindAsync(id);
             context.Clientes.Remove(cliente);
+        }
+
+        public async Task RemoverEndereco(Guid id)
+        {
+            var endereco = await context.Enderecos.FindAsync(id);
+            context.Enderecos.Remove(endereco);
         }
 
         public void Dispose() => context?.Dispose();

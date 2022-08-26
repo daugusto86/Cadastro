@@ -4,6 +4,7 @@ using Cadastro.Cliente.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cadastro.Infra.Migrations
 {
     [DbContext(typeof(CadastroContext))]
-    partial class CadastroContextModelSnapshot : ModelSnapshot
+    [Migration("20220826124112_Enderecos")]
+    partial class Enderecos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,9 +80,6 @@ namespace Cadastro.Infra.Migrations
                     b.Property<string>("Numero")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
-
-                    b.Property<bool>("Principal")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

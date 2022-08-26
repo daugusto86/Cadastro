@@ -6,6 +6,10 @@ namespace Cadastro.Cliente.Domain.Models.Validations
     {
         public EnderecoValidation()
         {
+            RuleFor(c => c.IdCliente)
+                .NotEqual(Guid.Empty)
+                .WithMessage("Cliente não informado");
+
             RuleFor(c => c.Logradouro)
                     .NotEmpty()
                     .WithMessage("Informe o Logradouro");

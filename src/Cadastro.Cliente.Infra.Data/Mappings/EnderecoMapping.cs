@@ -8,38 +8,46 @@ namespace Cadastro.Cliente.Infra.Data.Mappings
     {
         public void Configure(EntityTypeBuilder<Endereco> builder)
         {
-            builder.HasKey(c => c.Id);
+            builder.HasKey(x => x.Id);
 
-            builder.Property(c => c.Logradouro)
+            builder.Property(x => x.Logradouro)
                 .IsRequired()
                 .HasColumnType("varchar(200)");
 
-            builder.Property(c => c.Numero)
+            builder.Property(x => x.Numero)
                 .IsRequired()
                 .HasColumnType("varchar(50)");
 
-            builder.Property(c => c.Cep)
+            builder.Property(x => x.Cep)
                 .IsRequired()
                 .HasColumnType("varchar(20)");
 
-            builder.Property(c => c.Complemento)
+            builder.Property(x => x.Complemento)
                 .HasColumnType("varchar(250)");
 
-            builder.Property(c => c.Bairro)
+            builder.Property(x => x.Bairro)
                 .IsRequired()
                 .HasColumnType("varchar(100)");
 
-            builder.Property(c => c.Cidade)
+            builder.Property(x => x.Cidade)
                 .IsRequired()
                 .HasColumnType("varchar(100)");
 
-            builder.Property(c => c.Estado)
+            builder.Property(x => x.Estado)
                 .IsRequired()
                 .HasColumnType("varchar(50)");
 
-            builder.Property(c => c.IdCliente)
+            builder.Property(x => x.IdCliente)
                 .IsRequired()
                 .HasColumnType("uniqueidentifier");
+
+            builder.Property(x => x.Principal)
+                .IsRequired()
+                .HasColumnType("bit");
+
+            // 1 : N => Cliente : Enderecos
+            builder.HasOne(x => x.Cliente)
+                .WithMany(x => x.Enderecos);
 
             builder.ToTable("Enderecos");
         }

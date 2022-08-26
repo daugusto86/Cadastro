@@ -8,5 +8,6 @@
         public string Email { get; set; }
         public DateTime DataCadastro { get; set; }
         public bool Ativo { get; set; }
+        public IEnumerable<EnderecoViewModel> Enderecos { get; set; } = new List<EnderecoViewModel>();
     }
 }

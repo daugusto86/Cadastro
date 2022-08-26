@@ -13,6 +13,10 @@ namespace Cadastro.Cliente.Application.Interfaces
         Task<bool> AtualizarEmail(AtualizarEmailClienteViewModel cliente);
         Task<ClienteViewModel> Ativar(Guid id);
         Task<ClienteViewModel> Desativar(Guid id);
+        Task<EnderecoViewModel> ObterEnderecoPorId(Guid id);
+        Task<bool> AdicionarEndereco(EnderecoViewModel enderecoVm);
+        Task<bool> AtualizarEndereco(EnderecoViewModel enderecoVm);
+        Task<bool> RemoverEndereco(Guid id);
         Task<bool> Remover(Guid id);
     }
 }

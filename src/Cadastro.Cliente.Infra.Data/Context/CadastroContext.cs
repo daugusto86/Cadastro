@@ -1,4 +1,5 @@
-﻿using Cadastro.Core.Data;
+﻿using Cadastro.Cliente.Domain.Models;
+using Cadastro.Core.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cadastro.Cliente.Infra.Data.Context
@@ -9,6 +10,7 @@ namespace Cadastro.Cliente.Infra.Data.Context
             : base(options) { }
 
         public DbSet<Domain.Models.Cliente> Clientes { get; set; }
+        public DbSet<Endereco> Enderecos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

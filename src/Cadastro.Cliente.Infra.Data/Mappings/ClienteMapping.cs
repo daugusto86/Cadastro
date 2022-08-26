@@ -41,7 +41,12 @@ namespace Cadastro.Cliente.Infra.Data.Mappings
             builder.Property(x => x.Ativo)
                 .IsRequired()
                 .HasColumnType("bit");
-            
+
+            // 1 : N => Cliente : Enderecos
+            builder.HasMany(x => x.Enderecos)
+                .WithOne(x => x.Cliente)
+                .HasForeignKey(x => x.IdCliente);
+
             builder.ToTable("Clientes");
         }
     }

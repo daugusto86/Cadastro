@@ -1,5 +1,6 @@
 ﻿using Cadastro.Cliente.Domain.Events;
 using Cadastro.Cliente.Domain.Interfaces;
+using Cadastro.Cliente.Domain.Models;
 using Cadastro.Core.Mediator;
 using System.Linq.Expressions;
 
@@ -42,6 +43,11 @@ namespace Cadastro.Cliente.Domain.Services
             return await clienteRepository.Buscar(predicate);
         }
 
+        public async Task<Endereco> ObterEnderecoPorId(Guid id)
+        {
+            return await clienteRepository.ObterEnderecoPorId(id);
+        }
+
         public async Task<bool> Adicionar(Models.Cliente cliente)
         {
             clienteRepository.Adicionar(cliente);
@@ -58,6 +64,12 @@ namespace Cadastro.Cliente.Domain.Services
         }
 
         public async Task<bool> Remover(Guid id)
+        {
+            await clienteRepository.Remover(id);
+            return await clienteRepository.UnitOfWork.Commit();
+        }
+
+        public async Task<bool> RemoverEndereco(Guid id)
         {
             await clienteRepository.Remover(id);
             return await clienteRepository.UnitOfWork.Commit();

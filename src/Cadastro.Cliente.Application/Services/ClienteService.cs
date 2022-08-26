@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Cadastro.Cliente.Application.ViewModels;
+using Cadastro.Cliente.Domain.Models;
 using Cadastro.Core.Interfaces;
 
 namespace Cadastro.Cliente.Application.Services
@@ -26,7 +27,10 @@ namespace Cadastro.Cliente.Application.Services
         public async Task<ClienteViewModel> ObterPorId(Guid id)
         {
             var cliente = await clienteService.ObterPorId(id);
-            return mapper.Map<ClienteViewModel>(cliente);
+            var clienteVm = mapper.Map<ClienteViewModel>(cliente);
+            clienteVm.Enderecos = mapper.Map<List<EnderecoViewModel>>(cliente.Enderecos);
+
+            return clienteVm;
         }
 
         public async Task<ClienteViewModel> ObterPorEmail(string email)
@@ -131,6 +135,64 @@ namespace Cadastro.Cliente.Application.Services
         public async Task<bool> Remover(Guid id)
         {
             return await clienteService.Remover(id);
+        }
+
+        public async Task<EnderecoViewModel> ObterEnderecoPorId(Guid id)
+        {
+            var endereco = await clienteService.ObterEnderecoPorId(id);
+
+            if (endereco == null)
+            {
+                Notificar("Endereço não localizado");
+                return null;
+            }
+
+            return mapper.Map<EnderecoViewModel>(endereco);
+        }
+
+        public async Task<bool> AdicionarEndereco(EnderecoViewModel enderecoVm)
+        {
+            var endereco = mapper.Map<Endereco>(enderecoVm);
+            var cliente = await clienteService.ObterPorId(endereco.IdCliente);
+
+            if (cliente == null)
+            {
+                Notificar("Cliente não encontrado");
+                return false;
+            }
+
+            cliente.AdicionarEndereco(endereco);
+            return await clienteService.Atualizar(cliente);
+        }
+
+        public async Task<bool> AtualizarEndereco(EnderecoViewModel enderecoVm)
+        {
+            var endereco = mapper.Map<Endereco>(enderecoVm);
+            var cliente = await clienteService.ObterPorId(endereco.IdCliente);
+
+            if (cliente == null)
+            {
+                Notificar("Cliente não encontrado");
+                return false;
+            }
+
+            cliente.RemoverEndereco(endereco.Id);
+            cliente.AdicionarEndereco(endereco);
+
+            return await clienteService.Atualizar(cliente);
+        }
+
+        public async Task<bool> RemoverEndereco(Guid id)
+        {
+            var endereco = await clienteService.ObterEnderecoPorId(id);
+
+            if (endereco.Principal)
+            {
+                Notificar("O endereço está como principal e não pode ser removido. Primeiro desmarque como principal para depois remover.");
+                return false;
+            }
+
+            return await clienteService.RemoverEndereco(id);
         }
 
         private async Task<bool> EmailValido(Guid id, string email)
