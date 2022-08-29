@@ -47,6 +47,22 @@ namespace Cadastro.Cliente.Application.Tests.Fixtures
             return endereco;
         }
 
+        public Endereco GerarEnderecoValido(bool principal)
+        {
+            var endereco = new Faker<Endereco>("pt_BR")
+                .CustomInstantiator(f => new Endereco(f.Address.StreetName(),
+                    f.Address.BuildingNumber(),
+                    f.Address.SecondaryAddress(),
+                    "centro",
+                    f.Address.ZipCode(),
+                    f.Address.City(),
+                    f.Address.State(),
+                    Guid.NewGuid(),
+                    principal));
+
+            return endereco;
+        }
+
         public void Dispose()
         {
             
