@@ -162,6 +162,9 @@ namespace Cadastro.Api.Controllers
             return CustomResponse(endereco);
         }
 
+        [Authorize]
+        [ClaimsAuthorize("Cliente", "Excluir")]
+        [HttpDelete("excluir-endereco/{id:guid}")]
         public async Task<ActionResult<EnderecoViewModel>> ExcluirEndereco(Guid id)
         {
             var endereco = await clienteService.ObterEnderecoPorId(id);

@@ -8,7 +8,7 @@ namespace Cadastro.Api.Configuration
         public static IServiceCollection AddAutoMapperConfig(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(ClienteMappingProfile).GetTypeInfo().Assembly);
-
+            
             return services;
         }
     }
