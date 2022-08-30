@@ -28,6 +28,9 @@ namespace Cadastro.Cliente.Application.Services
         {
             var cliente = await clienteService.ObterPorId(id);
             var clienteVm = mapper.Map<ClienteViewModel>(cliente);
+
+            if (clienteVm == null) return clienteVm;
+
             clienteVm.Enderecos = mapper.Map<List<EnderecoViewModel>>(cliente.Enderecos);
 
             return clienteVm;
@@ -36,7 +39,6 @@ namespace Cadastro.Cliente.Application.Services
         public async Task<ClienteViewModel> ObterPorEmail(string email)
         {
             var cliente = await clienteService.ObterPorEmail(email);
-
             return mapper.Map<ClienteViewModel>(cliente);
         }
 

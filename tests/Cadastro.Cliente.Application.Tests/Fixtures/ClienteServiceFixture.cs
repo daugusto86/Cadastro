@@ -63,6 +63,14 @@ namespace Cadastro.Cliente.Application.Tests.Fixtures
             return endereco;
         }
 
+        public NovoClienteViewModel GerarNovoClienteViewModelValido()
+        {
+            //var cliente = new Faker<NovoClienteViewModel>("pt_BR")
+            //    .RuleFor(e => e.)
+
+            return new NovoClienteViewModel();
+        }
+
         public void Dispose()
         {
             

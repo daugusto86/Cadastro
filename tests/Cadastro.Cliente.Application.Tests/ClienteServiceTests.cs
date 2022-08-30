@@ -18,6 +18,20 @@ namespace Cadastro.Cliente.Application.Tests
             service = fixture.ObterClienteService();
         }
 
+        #region Testes referentes a cliente
+        [Fact(DisplayName = "Adicionar cliente com sucesso")]
+        [Trait("Application", "Cliente Service")]
+        public async Task ClienteService_ObterPorId_DeveExecutarComSucesso()
+        {
+            // Arrange
+
+            // Act
+
+            // Assert
+        }
+        #endregion
+
+        #region Testes referentes a endereço
         [Fact(DisplayName = "Adicionar endereço com sucesso")]
         [Trait("Application", "Cliente Service")]
         public async Task ClienteService_AdicionarEndereco_DeveExecutarComSucesso()
@@ -168,5 +182,6 @@ namespace Cadastro.Cliente.Application.Tests
             // Assert
             Assert.False(sucesso);
         }
+        #endregion
     }
 }
