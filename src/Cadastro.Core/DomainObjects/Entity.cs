@@ -8,8 +8,12 @@ namespace Cadastro.Core.DomainObjects
     {
         public Guid Id { get; set; }
         
+        /// <summary>
+        /// Está como virtual para ser reescrita nos testes
+        /// utilizando Mock
+        /// </summary>
         [NotMapped]
-        public ValidationResult ValidationResult { get; protected set; }
+        public virtual ValidationResult ValidationResult { get; protected set; }
 
         public Entity()
         {

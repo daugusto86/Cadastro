@@ -27,10 +27,10 @@ namespace Cadastro.Cliente.Application.Services
         public async Task<ClienteViewModel> ObterPorId(Guid id)
         {
             var cliente = await clienteService.ObterPorId(id);
+
+            if (cliente == null) return null;
+
             var clienteVm = mapper.Map<ClienteViewModel>(cliente);
-
-            if (clienteVm == null) return clienteVm;
-
             clienteVm.Enderecos = mapper.Map<List<EnderecoViewModel>>(cliente.Enderecos);
 
             return clienteVm;

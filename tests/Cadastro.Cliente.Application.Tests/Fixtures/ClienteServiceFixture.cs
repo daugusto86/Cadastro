@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using Bogus.Extensions.Brazil;
 using Cadastro.Cliente.Application.Services;
 using Cadastro.Cliente.Application.ViewModels;
 using Cadastro.Cliente.Domain.Models;
@@ -65,10 +66,22 @@ namespace Cadastro.Cliente.Application.Tests.Fixtures
 
         public NovoClienteViewModel GerarNovoClienteViewModelValido()
         {
-            //var cliente = new Faker<NovoClienteViewModel>("pt_BR")
-            //    .RuleFor(e => e.)
+            var cliente = new Faker<NovoClienteViewModel>("pt_BR")
+                .RuleFor(e => e.Nome, f => f.Name.FullName())
+                .RuleFor(e => e.Cpf, f => f.Person.Cpf())
+                .RuleFor(e => e.Email, f => f.Internet.Email());
 
-            return new NovoClienteViewModel();
+            return cliente;
+        }
+
+        public NovoClienteViewModel GerarNovoClienteViewModelInvalido()
+        {
+            var cliente = new Faker<NovoClienteViewModel>("pt_BR")
+                .RuleFor(e => e.Nome, f => f.Name.FullName())
+                .RuleFor(e => e.Cpf, f => "77777777777")
+                .RuleFor(e => e.Email, f => "aaaaaaaa");
+
+            return cliente;
         }
 
         public void Dispose()
