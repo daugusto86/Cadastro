@@ -84,6 +84,20 @@ namespace Cadastro.Cliente.Application.Tests.Fixtures
             return cliente;
         }
 
+        public AtualizarEmailClienteViewModel GerarAtualizarEmailClienteViewModelValido()
+        {
+            return new Faker<AtualizarEmailClienteViewModel>("pt_BR")
+                .RuleFor(e => e.Id, Guid.NewGuid())
+                .RuleFor(e => e.Email, f => f.Internet.Email());
+        }
+
+        public Domain.Models.Cliente GerarClienteValido()
+        {
+            return new Faker<Domain.Models.Cliente>("pt_BR")
+                .CustomInstantiator(f => new Domain.Models.Cliente(f.Name.FullName(),
+                    f.Person.Cpf(), f.Internet.Email()));
+        }
+
         public void Dispose()
         {
             

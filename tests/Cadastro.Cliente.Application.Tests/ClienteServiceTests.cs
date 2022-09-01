@@ -120,10 +120,145 @@ namespace Cadastro.Cliente.Application.Tests
             // Act
             var result = await service.Adicionar(novoClienteVm);
 
-            // Act && Assert
+            // Assert
             Assert.False(result);
         }
 
+        [Fact(DisplayName = "Cliente Atualizar E-mail Sucesso")]
+        [Trait("Application", "Cliente Service")]
+        public async Task ClienteService_AtualizarEmail_DeveExecutarComSucesso()
+        {
+            // Arrange
+            var atualizarEmailVm = fixture.GerarAtualizarEmailClienteViewModelValido();
+            var cliente = fixture.GerarClienteValido();
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Setup(x => x.ObterPorId(atualizarEmailVm.Id).Result)
+                .Returns(cliente);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Setup(x => x.Atualizar(cliente).Result)
+                .Returns(true);
+
+            // Act
+            var result = await service.AtualizarEmail(atualizarEmailVm);
+
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact(DisplayName = "Cliente Atualizar E-mail Falha")]
+        [Trait("Application", "Cliente Service")]
+        public async Task ClienteService_AtualizarEmail_DeveExecutarComFalha()
+        {
+            // Arrange
+            var atualizarEmailVm = fixture.GerarAtualizarEmailClienteViewModelValido();
+            Domain.Models.Cliente cliente = null;
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Setup(x => x.ObterPorId(atualizarEmailVm.Id).Result)
+                .Returns(cliente);
+
+            // Act
+            var result = await service.AtualizarEmail(atualizarEmailVm);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact(DisplayName = "Cliente Ativar Sucesso")]
+        [Trait("Application", "Cliente Service")]
+        public async Task ClienteService_Ativar_DeveExecutarComSucesso()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            var cliente = new Mock<Domain.Models.Cliente>();
+            var clienteVm = new ClienteViewModel { Id = id };
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Setup(x => x.ObterPorId(id).Result)
+                .Returns(cliente.Object);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Setup(x => x.Atualizar(cliente.Object).Result)
+                .Returns(true);
+
+            fixture.Mocker.GetMock<IMapper>()
+                .Setup(x => x.Map<ClienteViewModel>(cliente.Object))
+                .Returns(clienteVm);
+
+            // Act
+            var resutl = await service.Ativar(id);
+
+            // Assert
+            Assert.NotNull(resutl);
+        }
+
+        [Fact(DisplayName = "Cliente Ativar Falha")]
+        [Trait("Application", "Cliente Service")]
+        public async Task ClienteService_Ativar_DeveRetornarNull()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            Domain.Models.Cliente cliente = null;
+            
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Setup(x => x.ObterPorId(id).Result)
+                .Returns(cliente);
+
+            // Act
+            var resutl = await service.Ativar(id);
+
+            // Assert
+            Assert.Null(resutl);
+        }
+
+        [Fact(DisplayName = "Cliente Desativar Sucesso")]
+        [Trait("Application", "Cliente Service")]
+        public async Task ClienteService_Desativar_DeveExecutarComSucesso()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            var cliente = new Mock<Domain.Models.Cliente>();
+            var clienteVm = new ClienteViewModel { Id = id };
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Setup(x => x.ObterPorId(id).Result)
+                .Returns(cliente.Object);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Setup(x => x.Atualizar(cliente.Object).Result)
+                .Returns(true);
+
+            fixture.Mocker.GetMock<IMapper>()
+                .Setup(x => x.Map<ClienteViewModel>(cliente.Object))
+                .Returns(clienteVm);
+
+            // Act
+            var resutl = await service.Desativar(id);
+
+            // Assert
+            Assert.NotNull(resutl);
+        }
+
+        [Fact(DisplayName = "Cliente Desativar Falha")]
+        [Trait("Application", "Cliente Service")]
+        public async Task ClienteService_Desativar_DeveRetornarNull()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            Domain.Models.Cliente cliente = null;
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Setup(x => x.ObterPorId(id).Result)
+                .Returns(cliente);
+
+            // Act
+            var resutl = await service.Desativar(id);
+
+            // Assert
+            Assert.Null(resutl);
+        }
         #endregion
 
         #region Testes referentes a endereço
