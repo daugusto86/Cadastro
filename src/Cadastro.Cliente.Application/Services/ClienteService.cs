@@ -188,6 +188,12 @@ namespace Cadastro.Cliente.Application.Services
         {
             var endereco = await clienteService.ObterEnderecoPorId(id);
 
+            if (endereco == null)
+            {
+                Notificar("Endereço não encontrado");
+                return false;
+            }
+
             if (endereco.Principal)
             {
                 Notificar("O endereço está como principal e não pode ser removido. Primeiro desmarque como principal para depois remover.");

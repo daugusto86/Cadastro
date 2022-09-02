@@ -3,7 +3,6 @@ using Cadastro.Cliente.Application.Services;
 using Cadastro.Cliente.Application.Tests.Fixtures;
 using Cadastro.Cliente.Application.ViewModels;
 using Cadastro.Cliente.Domain.Models;
-using Cadastro.Core.DomainObjects;
 using FluentValidation.Results;
 using Moq;
 
@@ -22,8 +21,8 @@ namespace Cadastro.Cliente.Application.Tests
         }
 
         #region Testes referentes a cliente
-        [Fact(DisplayName = "Obter Cliente por Id com Sucesso")]
-        [Trait("Application", "Cliente Service")]
+        [Fact(DisplayName = "Cliente Obter por Id com Sucesso")]
+        [Trait("Categoria", "Cliente Service")]
         public async Task ClienteService_ObterPorId_DeveExecutarComSucesso()
         {
             // Arrange
@@ -48,10 +47,12 @@ namespace Cadastro.Cliente.Application.Tests
 
             // Assert
             Assert.NotNull(result);
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterPorId(id), Times.Once);
         }
 
-        [Fact(DisplayName = "Obter Cliente por Id com Falha")]
-        [Trait("Application", "Cliente Service")]
+        [Fact(DisplayName = "Cliente Obter por Id com Falha")]
+        [Trait("Categoria", "Cliente Service")]
         public async Task ClienteService_ObterPorId_DeveRetornarNull()
         {
             // Arrange
@@ -68,10 +69,12 @@ namespace Cadastro.Cliente.Application.Tests
 
             // Assert
             Assert.Null(result);
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterPorId(id), Times.Once);
         }
 
-        [Fact(DisplayName = "Adicionar Cliente com Sucesso")]
-        [Trait("Application", "Cliente Service")]
+        [Fact(DisplayName = "Cliente Adicionar com Sucesso")]
+        [Trait("Categoria", "Cliente Service")]
         public async Task ClienteService_Adicionar_DeveExecutarComSucesso()
         {
             // Arrange
@@ -91,10 +94,12 @@ namespace Cadastro.Cliente.Application.Tests
 
             // Assert
             Assert.True(result);
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.Adicionar(It.IsAny<Domain.Models.Cliente>()), Times.Once);
         }
 
-        [Fact(DisplayName = "Adicionar Cliente com Falha")]
-        [Trait("Application", "Cliente Service")]
+        [Fact(DisplayName = "Cliente Adicionar com Falha")]
+        [Trait("Categoria", "Cliente Service")]
         public async Task ClienteService_Adicionar_DeveExecutarComFalha()
         {
             // Arrange
@@ -124,8 +129,61 @@ namespace Cadastro.Cliente.Application.Tests
             Assert.False(result);
         }
 
+        [Fact(DisplayName = "Cliente Atualizar com Sucesso")]
+        [Trait("Categoria", "Cliente Service")]
+        public async Task ClienteService_Atualizar_DeveExecutarComSucesso()
+        {
+            // Arrange
+            var clienteVm = fixture.GerarAtualizarClienteViewModelValido();
+            var cliente = new Mock<Domain.Models.Cliente>();
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Setup(x => x.ObterPorId(clienteVm.Id))
+                .Returns(Task.FromResult(cliente.Object));
+
+            cliente.Setup(x => x.ValidationResult).Returns(new ValidationResult());
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Setup(x => x.Atualizar(cliente.Object))
+                .Returns(Task.FromResult(true));
+
+            // Act
+            var result = await service.Atualizar(clienteVm);
+
+            // Assert
+            Assert.True(result);
+            
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterPorId(It.IsAny<Guid>()), Times.Once);
+            
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.Atualizar(It.IsAny<Domain.Models.Cliente>()), Times.Once);
+        }
+
+        [Fact(DisplayName = "Cliente Atualizar com Falha")]
+        [Trait("Categoria", "Cliente Service")]
+        public async Task ClienteService_Atualizar_DeveExecutarComFalha()
+        {
+            // Arrange
+            var clienteVm = fixture.GerarAtualizarClienteViewModelValido();
+            Domain.Models.Cliente cliente = null;
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Setup(x => x.ObterPorId(clienteVm.Id))
+                .Returns(Task.FromResult(cliente));
+
+            // Act
+            var result = await service.Atualizar(clienteVm);
+
+            // Assert
+            Assert.False(result);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterPorId(It.IsAny<Guid>()), Times.Once);
+        }
+
         [Fact(DisplayName = "Cliente Atualizar E-mail Sucesso")]
-        [Trait("Application", "Cliente Service")]
+        [Trait("Categoria", "Cliente Service")]
         public async Task ClienteService_AtualizarEmail_DeveExecutarComSucesso()
         {
             // Arrange
@@ -145,10 +203,16 @@ namespace Cadastro.Cliente.Application.Tests
 
             // Assert
             Assert.True(result);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterPorId(It.IsAny<Guid>()), Times.Once);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.Atualizar(It.IsAny<Domain.Models.Cliente>()), Times.Once);
         }
 
         [Fact(DisplayName = "Cliente Atualizar E-mail Falha")]
-        [Trait("Application", "Cliente Service")]
+        [Trait("Categoria", "Cliente Service")]
         public async Task ClienteService_AtualizarEmail_DeveExecutarComFalha()
         {
             // Arrange
@@ -164,10 +228,13 @@ namespace Cadastro.Cliente.Application.Tests
 
             // Assert
             Assert.False(result);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterPorId(It.IsAny<Guid>()), Times.Once);
         }
 
         [Fact(DisplayName = "Cliente Ativar Sucesso")]
-        [Trait("Application", "Cliente Service")]
+        [Trait("Categoria", "Cliente Service")]
         public async Task ClienteService_Ativar_DeveExecutarComSucesso()
         {
             // Arrange
@@ -192,10 +259,16 @@ namespace Cadastro.Cliente.Application.Tests
 
             // Assert
             Assert.NotNull(resutl);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterPorId(It.IsAny<Guid>()), Times.Once);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.Atualizar(It.IsAny<Domain.Models.Cliente>()), Times.Once);
         }
 
         [Fact(DisplayName = "Cliente Ativar Falha")]
-        [Trait("Application", "Cliente Service")]
+        [Trait("Categoria", "Cliente Service")]
         public async Task ClienteService_Ativar_DeveRetornarNull()
         {
             // Arrange
@@ -206,15 +279,20 @@ namespace Cadastro.Cliente.Application.Tests
                 .Setup(x => x.ObterPorId(id).Result)
                 .Returns(cliente);
 
+
             // Act
             var resutl = await service.Ativar(id);
 
+
             // Assert
             Assert.Null(resutl);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterPorId(It.IsAny<Guid>()), Times.Once);
         }
 
         [Fact(DisplayName = "Cliente Desativar Sucesso")]
-        [Trait("Application", "Cliente Service")]
+        [Trait("Categoria", "Cliente Service")]
         public async Task ClienteService_Desativar_DeveExecutarComSucesso()
         {
             // Arrange
@@ -239,10 +317,16 @@ namespace Cadastro.Cliente.Application.Tests
 
             // Assert
             Assert.NotNull(resutl);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterPorId(It.IsAny<Guid>()), Times.Once);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.Atualizar(It.IsAny<Domain.Models.Cliente>()), Times.Once);
         }
 
         [Fact(DisplayName = "Cliente Desativar Falha")]
-        [Trait("Application", "Cliente Service")]
+        [Trait("Categoria", "Cliente Service")]
         public async Task ClienteService_Desativar_DeveRetornarNull()
         {
             // Arrange
@@ -258,12 +342,64 @@ namespace Cadastro.Cliente.Application.Tests
 
             // Assert
             Assert.Null(resutl);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterPorId(It.IsAny<Guid>()), Times.Once);
         }
         #endregion
 
         #region Testes referentes a endereço
-        [Fact(DisplayName = "Adicionar Endereço com Sucesso")]
-        [Trait("Application", "Cliente Service")]
+        [Fact(DisplayName = "Endereço Obtrer por Id Sucesso")]
+        [Trait("Categoria", "Cliente Service")]
+        public async Task ClienteService_ObterEnderecoPorId_DeveExecutarComSucesso()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            var endereco = new Mock<Endereco>();
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Setup(x => x.ObterEnderecoPorId(id))
+                .Returns(Task.FromResult(endereco.Object));
+
+            fixture.Mocker.GetMock<IMapper>()
+                .Setup(x => x.Map<EnderecoViewModel>(endereco.Object))
+                .Returns(new EnderecoViewModel());
+                
+
+            // Act
+            var result = await service.ObterEnderecoPorId(id);
+
+            // Assert
+            Assert.NotNull(result);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterEnderecoPorId(It.IsAny<Guid>()), Times.Once);
+        }
+
+        [Fact(DisplayName = "Endereço Obtrer por Id Falha")]
+        [Trait("Categoria", "Cliente Service")]
+        public async Task ClienteService_ObterEnderecoPorId_DeveRetornarNull()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            Endereco endereco = null;
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Setup(x => x.ObterEnderecoPorId(id))
+                .Returns(Task.FromResult(endereco));
+
+            // Act
+            var result = await service.ObterEnderecoPorId(id);
+
+            // Assert
+            Assert.Null(result);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterEnderecoPorId(It.IsAny<Guid>()), Times.Once);
+        }
+
+        [Fact(DisplayName = "Endereço Adicionar com Sucesso")]
+        [Trait("Categoria", "Cliente Service")]
         public async Task ClienteService_AdicionarEndereco_DeveExecutarComSucesso()
         {
             // Arrange
@@ -288,10 +424,16 @@ namespace Cadastro.Cliente.Application.Tests
 
             // Assert
             Assert.True(sucesso);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterPorId(It.IsAny<Guid>()), Times.Once);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.Atualizar(It.IsAny<Domain.Models.Cliente>()), Times.Once);
         }
 
-        [Fact(DisplayName = "Adicionar Endereço com Falha")]
-        [Trait("Application", "Cliente Service")]
+        [Fact(DisplayName = "Endereço Adicionar com Falha")]
+        [Trait("Categoria", "Cliente Service")]
         public async Task ClienteService_AdicionarEndereco_DeveExecutarComFalha()
         {
             // Arrange
@@ -312,10 +454,13 @@ namespace Cadastro.Cliente.Application.Tests
 
             // Assert
             Assert.False(sucesso);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterPorId(It.IsAny<Guid>()), Times.Once);
         }
 
-        [Fact(DisplayName = "Atualizar Endereço com Sucesso")]
-        [Trait("Application", "Cliente Service")]
+        [Fact(DisplayName = "Endereço Atualizar com Sucesso")]
+        [Trait("Categoria", "Cliente Service")]
         public async Task ClienteService_AtualizarEndereco_DeveExecutarComSucesso()
         {
             // Arrange
@@ -342,10 +487,16 @@ namespace Cadastro.Cliente.Application.Tests
 
             // Assert
             Assert.True(sucesso);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterPorId(It.IsAny<Guid>()), Times.Once);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.Atualizar(It.IsAny<Domain.Models.Cliente>()), Times.Once);
         }
 
-        [Fact(DisplayName = "Atualizar Endereço com Falha")]
-        [Trait("Application", "Cliente Service")]
+        [Fact(DisplayName = "Endereço Atualizar com Falha")]
+        [Trait("Categoria", "Cliente Service")]
         public async Task ClienteService_AtualizarEndereco_DeveExecutarComFalha()
         {
             // Arrange
@@ -366,10 +517,13 @@ namespace Cadastro.Cliente.Application.Tests
 
             // Assert
             Assert.False(sucesso);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterPorId(It.IsAny<Guid>()), Times.Once);
         }
 
-        [Fact(DisplayName = "Remover Endereço com Sucesso")]
-        [Trait("Application", "Cliente Service")]
+        [Fact(DisplayName = "Endereço Remover com Sucesso")]
+        [Trait("Categoria", "Cliente Service")]
         public async Task ClienteService_RemoverEndereco_DeveExecutarComSucesso()
         {
             // Arrange
@@ -391,11 +545,17 @@ namespace Cadastro.Cliente.Application.Tests
 
             // Assert
             Assert.True(sucesso);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterEnderecoPorId(It.IsAny<Guid>()), Times.Once);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.RemoverEndereco(It.IsAny<Guid>()), Times.Once);
         }
 
-        [Fact(DisplayName = "Remover Endereço com Falha")]
-        [Trait("Application", "Cliente Service")]
-        public async Task ClienteService_RemoverEndereco_DeveExecutarComFalha()
+        [Fact(DisplayName = "Endereço Remover com Falha")]
+        [Trait("Categoria", "Cliente Service")]
+        public async Task ClienteService_RemoverEndereco_FalhaEnderecoPrincipalNaoPodeSerRemovido()
         {
             // Arrange
             var id = Guid.NewGuid();
@@ -411,6 +571,32 @@ namespace Cadastro.Cliente.Application.Tests
 
             // Assert
             Assert.False(sucesso);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterEnderecoPorId(It.IsAny<Guid>()), Times.Once);
+        }
+
+        [Fact(DisplayName = "Endereço Remover com Falha")]
+        [Trait("Categoria", "Cliente Service")]
+        public async Task ClienteService_RemoverEndereco_DeveExecutarComFalhaEnderecoNaoEncontrado()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            Endereco endereco = null;
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Setup(x => x.ObterEnderecoPorId(id).Result)
+                .Returns(endereco);
+
+            // Act
+            var sucesso = await service.RemoverEndereco(id);
+
+
+            // Assert
+            Assert.False(sucesso);
+
+            fixture.Mocker.GetMock<Domain.Interfaces.IClienteService>()
+                .Verify(x => x.ObterEnderecoPorId(It.IsAny<Guid>()), Times.Once);
         }
         #endregion
     }

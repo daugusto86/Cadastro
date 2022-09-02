@@ -22,6 +22,7 @@ namespace Cadastro.Cliente.Application.Tests.Fixtures
     {
         public ClienteService ClienteService;
         public AutoMocker Mocker;
+        private const string locale = "pt_BR";
 
         public ClienteService ObterClienteService()
         {
@@ -34,7 +35,7 @@ namespace Cadastro.Cliente.Application.Tests.Fixtures
         public EnderecoViewModel GerarEnderecoViewModelValido()
         {
             var principal = new[] { true, false };
-            var endereco = new Faker<EnderecoViewModel>("pt_BR")
+            var endereco = new Faker<EnderecoViewModel>(locale)
                 .RuleFor(e => e.IdCliente, f => Guid.NewGuid())
                 .RuleFor(e => e.Logradouro, f => f.Address.StreetName())
                 .RuleFor(e => e.Numero, f => f.Address.BuildingNumber())
@@ -50,7 +51,7 @@ namespace Cadastro.Cliente.Application.Tests.Fixtures
 
         public Endereco GerarEnderecoValido(bool principal)
         {
-            var endereco = new Faker<Endereco>("pt_BR")
+            var endereco = new Faker<Endereco>(locale)
                 .CustomInstantiator(f => new Endereco(f.Address.StreetName(),
                     f.Address.BuildingNumber(),
                     f.Address.SecondaryAddress(),
@@ -66,7 +67,7 @@ namespace Cadastro.Cliente.Application.Tests.Fixtures
 
         public NovoClienteViewModel GerarNovoClienteViewModelValido()
         {
-            var cliente = new Faker<NovoClienteViewModel>("pt_BR")
+            var cliente = new Faker<NovoClienteViewModel>(locale)
                 .RuleFor(e => e.Nome, f => f.Name.FullName())
                 .RuleFor(e => e.Cpf, f => f.Person.Cpf())
                 .RuleFor(e => e.Email, f => f.Internet.Email());
@@ -76,7 +77,7 @@ namespace Cadastro.Cliente.Application.Tests.Fixtures
 
         public NovoClienteViewModel GerarNovoClienteViewModelInvalido()
         {
-            var cliente = new Faker<NovoClienteViewModel>("pt_BR")
+            var cliente = new Faker<NovoClienteViewModel>(locale)
                 .RuleFor(e => e.Nome, f => f.Name.FullName())
                 .RuleFor(e => e.Cpf, f => "77777777777")
                 .RuleFor(e => e.Email, f => "aaaaaaaa");
@@ -86,16 +87,23 @@ namespace Cadastro.Cliente.Application.Tests.Fixtures
 
         public AtualizarEmailClienteViewModel GerarAtualizarEmailClienteViewModelValido()
         {
-            return new Faker<AtualizarEmailClienteViewModel>("pt_BR")
+            return new Faker<AtualizarEmailClienteViewModel>(locale)
                 .RuleFor(e => e.Id, Guid.NewGuid())
                 .RuleFor(e => e.Email, f => f.Internet.Email());
         }
 
         public Domain.Models.Cliente GerarClienteValido()
         {
-            return new Faker<Domain.Models.Cliente>("pt_BR")
+            return new Faker<Domain.Models.Cliente>(locale)
                 .CustomInstantiator(f => new Domain.Models.Cliente(f.Name.FullName(),
                     f.Person.Cpf(), f.Internet.Email()));
+        }
+
+        public AtualizarClienteViewModel GerarAtualizarClienteViewModelValido()
+        {
+            return new Faker<AtualizarClienteViewModel>(locale)
+                .RuleFor(e => e.Id, Guid.NewGuid())
+                .RuleFor(e => e.Nome, f => f.Name.FullName());
         }
 
         public void Dispose()
