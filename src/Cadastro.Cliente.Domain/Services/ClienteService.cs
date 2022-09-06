@@ -1,6 +1,7 @@
 ﻿using Cadastro.Cliente.Domain.Events;
 using Cadastro.Cliente.Domain.Interfaces;
 using Cadastro.Cliente.Domain.Models;
+using Cadastro.Core.DomainObjects;
 using Cadastro.Core.Mediator;
 using System.Linq.Expressions;
 
@@ -15,6 +16,11 @@ namespace Cadastro.Cliente.Domain.Services
         {
             this.clienteRepository = clienteRepository;
             this.mediator = mediator;
+        }
+
+        public async Task<PagedResult<Models.Cliente>> ObterTodosPaginado(int pageSize, int pageIndex)
+        {
+            return await clienteRepository.ObterTodosPaginado(pageSize, pageIndex);
         }
 
         public async Task<IEnumerable<Models.Cliente>> ObterTodos()

@@ -1,6 +1,7 @@
 ﻿using Cadastro.Api.Extensions;
 using Cadastro.Cliente.Application.Interfaces;
 using Cadastro.Cliente.Application.ViewModels;
+using Cadastro.Core.DomainObjects;
 using Cadastro.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,12 @@ namespace Cadastro.Api.Controllers
         public async Task<IEnumerable<ClienteViewModel>> ObterTodos()
         {
             return await clienteService.ObterTodos();
+        }
+
+        [HttpGet("clientes-paginado")]
+        public async Task<PagedResult<ClienteViewModel>> ObterTodosPaginado([FromQuery] int pageSize = 15, [FromQuery] int pageIndex = 1)
+        {
+            return await clienteService.ObterTodosPaginado(pageSize, pageIndex);
         }
 
         [HttpGet("nome/{nome}")]

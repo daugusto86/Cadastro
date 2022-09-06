@@ -2,6 +2,7 @@
 using Cadastro.Cliente.Domain.Models;
 using Cadastro.Cliente.Infra.Data.Context;
 using Cadastro.Core.Data;
+using Cadastro.Core.DomainObjects;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -15,6 +16,26 @@ namespace Cadastro.Cliente.Infra.Data.Repository
         public ClienteRepository(CadastroContext context)
         {
             this.context = context;
+        }
+
+        public async Task<PagedResult<Domain.Models.Cliente>> ObterTodosPaginado(int pageSize, int pageIndex)
+        {
+            var clientes = await context.Clientes.AsNoTracking()
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var totalResults = await context.Clientes.CountAsync();
+
+            var pagedResult = new PagedResult<Domain.Models.Cliente>
+            {
+                List = clientes,
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                TotalResults = totalResults
+            };
+
+            return pagedResult;
         }
 
         public async Task<List<Domain.Models.Cliente>> ObterTodos()

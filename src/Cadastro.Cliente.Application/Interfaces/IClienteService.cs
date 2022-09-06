@@ -1,9 +1,11 @@
 ﻿using Cadastro.Cliente.Application.ViewModels;
+using Cadastro.Core.DomainObjects;
 
 namespace Cadastro.Cliente.Application.Interfaces
 {
     public interface IClienteService
     {
+        Task<PagedResult<ClienteViewModel>> ObterTodosPaginado(int pageSize, int pageIndex);
         Task<IEnumerable<ClienteViewModel>> ObterTodos();
         Task<ClienteViewModel> ObterPorId(Guid id);
         Task<ClienteViewModel> ObterPorEmail(string email);

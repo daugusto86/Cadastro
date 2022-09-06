@@ -19,6 +19,20 @@ namespace Cadastro.Cliente.Application.Services
             this.mapper = mapper;
         }
 
+        public async Task<PagedResult<ClienteViewModel>> ObterTodosPaginado(int pageSize, int pageIndex)
+        {
+            var result = await clienteService.ObterTodosPaginado(pageSize, pageIndex);
+            var clientesVm = mapper.Map<IEnumerable<ClienteViewModel>>(result.List);
+
+            return new PagedResult<ClienteViewModel>
+            {
+                List = clientesVm,
+                PageIndex = result.PageIndex,
+                PageSize = result.PageSize,
+                TotalResults = result.TotalResults
+            };
+        }
+
         public async Task<IEnumerable<ClienteViewModel>> ObterTodos()
         {
             var clientes = await clienteService.ObterTodos();
@@ -227,7 +241,7 @@ namespace Cadastro.Cliente.Application.Services
         {
             var emUso = (await clienteService.Buscar(x => x.Email.Endereco == email && x.Id != id)).Any();
             
-            if (!emUso) return true;
+            if (emUso) return true;
 
             Notificar("O e-mail informado já está utilizado. Informe outro.");
             return false;
@@ -238,7 +252,7 @@ namespace Cadastro.Cliente.Application.Services
             cpf = cpf?.Trim().Replace(".", "").Replace("-", "");
             var emUso = (await clienteService.Buscar(x => x.Cpf.Numero == cpf && x.Id != id)).Any();
             
-            if (!emUso) return true;
+            if (emUso) return true;
 
             Notificar("O CPF informado já está cadastrado no sistema.");
             return false;
