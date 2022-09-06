@@ -21,4 +21,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Cadastro.Cliente.Domain\Cadastro.Cliente.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Cadastro.Core\Cadastro.Core.csproj" />
+  </ItemGroup>
+
 </Project>

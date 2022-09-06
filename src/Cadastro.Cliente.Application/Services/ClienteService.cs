@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Cadastro.Cliente.Application.ViewModels;
 using Cadastro.Cliente.Domain.Models;
+using Cadastro.Core.DomainObjects;
 using Cadastro.Core.Interfaces;
 
 namespace Cadastro.Cliente.Application.Services
@@ -50,14 +51,27 @@ namespace Cadastro.Cliente.Application.Services
 
         public async Task<bool> Adicionar(NovoClienteViewModel cliente)
         {
+            if (!Cpf.Validar(cliente.Cpf))
+            {
+                Notificar("CPF inválido");
+                return false;
+            }
+
+            if (!Email.Validar(cliente.Email))
+            {
+                Notificar("E-mail inválido");
+                return false;
+            }
+
             var model = mapper.Map<Domain.Models.Cliente>(cliente);
+
             if (!ExecutarValidacao(model.ValidationResult))
                 return false;
 
-            if (!await EmailValido(model.Id, cliente.Email))
+            if (await EmailJaCadastrado(model.Id, cliente.Email))
                 return false;
 
-            if (!await CpfValido(model.Id, cliente.Cpf))
+            if (await CpfJaCadastrado(model.Id, cliente.Cpf))
                 return false;
 
             return await clienteService.Adicionar(model);
@@ -83,6 +97,12 @@ namespace Cadastro.Cliente.Application.Services
 
         public async Task<bool> AtualizarEmail(AtualizarEmailClienteViewModel cliente)
         {
+            if (!Email.Validar(cliente.Email))
+            {
+                Notificar("E-mail inválido");
+                return false;
+            }
+
             var model = await clienteService.ObterPorId(cliente.Id);
 
             if (model == null)
@@ -91,7 +111,7 @@ namespace Cadastro.Cliente.Application.Services
                 return false;
             }
 
-            if (!await EmailValido(cliente.Id, cliente.Email))
+            if (await EmailJaCadastrado(cliente.Id, cliente.Email))
                 return false;
 
             model.MudarEmail(cliente.Email);
@@ -203,7 +223,7 @@ namespace Cadastro.Cliente.Application.Services
             return await clienteService.RemoverEndereco(id);
         }
 
-        private async Task<bool> EmailValido(Guid id, string email)
+        private async Task<bool> EmailJaCadastrado(Guid id, string email)
         {
             var emUso = (await clienteService.Buscar(x => x.Email.Endereco == email && x.Id != id)).Any();
             
@@ -213,7 +233,7 @@ namespace Cadastro.Cliente.Application.Services
             return false;
         }
 
-        private async Task<bool> CpfValido(Guid id, string cpf)
+        private async Task<bool> CpfJaCadastrado(Guid id, string cpf)
         {
             cpf = cpf?.Trim().Replace(".", "").Replace("-", "");
             var emUso = (await clienteService.Buscar(x => x.Cpf.Numero == cpf && x.Id != id)).Any();
