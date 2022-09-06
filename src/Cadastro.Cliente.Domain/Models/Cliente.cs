@@ -6,14 +6,6 @@ namespace Cadastro.Cliente.Domain.Models
 {
     public class Cliente : Entity, IAggregateRoot
     {
-        // TODO:
-        // criar propriedade de Inativo
-        // criar value object para cpf e email
-        // criar entidade filha endereço, vai ser uma lista
-        // implementar paginação 
-        // criar testes unitários
-        // adicionar campo principal no endereco
-
         public string Nome { get; private set; }
         public Cpf Cpf { get; private set; }
         public Email Email { get; private set; }
