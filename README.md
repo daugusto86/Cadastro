@@ -29,9 +29,7 @@ Para desenvolver os testes de unidade foi utilizado o xUnit. Para gerar massa de
 
 ## Outras Bibliotecas Utilizadas
 - AutoMapper
-- AutoMapper.Extensions.Microsoft.DependencyInjection
-- Mediatr
-- Mediatr.Extensions.Microsoft.DependencyInjection
+- MediatR
 - FluentValidation
 
 ## Referências
