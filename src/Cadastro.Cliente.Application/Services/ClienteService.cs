@@ -241,10 +241,10 @@ namespace Cadastro.Cliente.Application.Services
         {
             var emUso = (await clienteService.Buscar(x => x.Email.Endereco == email && x.Id != id)).Any();
             
-            if (emUso) return true;
+            if (!emUso) return false;
 
             Notificar("O e-mail informado já está utilizado. Informe outro.");
-            return false;
+            return true;
         }
 
         private async Task<bool> CpfJaCadastrado(Guid id, string cpf)
@@ -252,10 +252,10 @@ namespace Cadastro.Cliente.Application.Services
             cpf = cpf?.Trim().Replace(".", "").Replace("-", "");
             var emUso = (await clienteService.Buscar(x => x.Cpf.Numero == cpf && x.Id != id)).Any();
             
-            if (emUso) return true;
+            if (!emUso) return false;
 
             Notificar("O CPF informado já está cadastrado no sistema.");
-            return false;
+            return true;
         }
     }
 }
